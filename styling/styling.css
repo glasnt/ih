@@ -1,0 +1,40 @@
+body { 
+    font-family: "Helvetica Neue"; 
+}
+
+table {
+    border-collapse: collapse;
+    white-space: nowrap;
+    overflow: scroll;
+}
+
+.legend table, .legend th, .legend td, .chart table, .chart th, .chart td {
+    border: 1px solid black;
+}
+
+.legend td, .chart td {
+    vertical-align: middle;
+    text-align: center;
+    height: 30px;
+    width: 30px
+}
+
+.zztop { 
+    vertical-align: top;
+}
+
+.space { 
+    padding-left: 20px; 
+}
+
+.color_cell {
+    text-align: center;
+    display: inline-block;
+    line-height: 30px;
+    height: 30px; 
+    width: 30px;
+    box-shadow: inset 0px 0px 0px 1px black; 
+  /*  border-bottom: 1px solid black; 
+    border-right: 1px solid black; */
+}
+.center { box-shadow:inset 0px 0px 0px 4px #f00;}
