@@ -1,4 +1,3 @@
-import os
 import json
 import click
 from textwrap import dedent
@@ -7,28 +6,30 @@ from PIL import Image
 
 from math import ceil
 
-from ih.palette import get_palette_image
+from ih.palette import *
 from ih.helpers import *
 
-def chart(image_name, palette_name, scale, colours, render, fileformat="html"):
+def chart(image_name, palette_name, scale, colours, render, fileformat="html", save=True):
     im = Image.open(image_name)
 
     chartimage = preprocess_image(im, palette_name=palette_name, colorlimit=colours, scale=scale)
 
     chart = generate_chart(chartimage, palette_name, render)
 
-    saved = save_chart(chart, image_name, fileformat)
-    return saved
+    if save:
+        saved = save_chart(chart, image_name, fileformat)
+        return saved
+    else:
+        return chart
 
 def preprocess_image(image, palette_name="wool", colorlimit=256, scale=1):
 
     palette = get_palette_image(palette_name)
 
     # magic, 'cept grey
-    im = image.transpose(Image.FLIP_TOP_BOTTOM).transpose(Image.ROTATE_270) \
-           .resize((int(image.width/scale), int(image.height/scale)))             \
-           .convert("RGB").convert('P', palette=Image.ADAPTIVE, colors=colorlimit) \
-           .convert("RGB")
+    im = image.transpose(Image.FLIP_TOP_BOTTOM).transpose(Image.ROTATE_270)
+    im = im.resize((int(image.width/scale), int(image.height/scale)))
+    im = im.convert("RGB").convert('P', palette=Image.ADAPTIVE, colors=colorlimit).convert("RGB")
 
     _im = im.im.convert('P', 0, palette.im) # HACK, quantize fixes
 
@@ -39,7 +40,8 @@ def generate_chart(chartimage, palette_name, render):
     histogram = sorted(chartimage.getcolors())
 
     html = ['<html><meta charset="utf-8">']
-    with open(Path.cwd().joinpath("styling", "styling.css")) as s:
+
+    with open(base_path().joinpath("styling", "styling.css")) as s:
         html.append("<style>" + "".join(s.readlines()) + "</style>")
 
     if render:
@@ -95,7 +97,7 @@ def generate_chart(chartimage, palette_name, render):
 
 def save_chart(html, image, fileformat):
     if fileformat == "html":
-        outfile = 'output/{}.html'.format("_".join(image.split("/")[-1].split(".")[:-1]))
+        outfile = '{}.html'.format("_".join(image.split("/")[-1].split(".")[:-1]))
 
         with open(outfile, 'w', encoding='utf-8') as f:
             f.write(html)

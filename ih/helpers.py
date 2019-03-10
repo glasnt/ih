@@ -1,8 +1,8 @@
 """
 Helpers and values
 """
+import os
 from pathlib import Path
-from ih.palette import *
 
 # A series of visually distinct characters, to populate the chart
 STARS = ['✚', '✽', '※', '✷', '❐', '❄', '✔', '◀', '⊐', '♠', '★', '»', '✿', '⟘',
@@ -14,19 +14,6 @@ def rgb2hex(pix):
     """Given a tuple of r, g, b, return the hex value """
     r, g, b = pix
     return '#{:02x}{:02x}{:02x}'.format(r, g, b)
-
-PALETTE_DATA = {}
-
-def thread_name(rgb, palette_name):
-    #if not PALETTE_DATA:
-    PALETTE_DATA = get_palette(palette_name)
-
-    for t in PALETTE_DATA:
-        if tuple(t['RGB']) == rgb:
-            return t
-
-    ## Return a basic thread type if thread not found in palette
-    return {"Name": str(rgb), "Code": "???"}
 
 
 def color_cell(rgb, icon, thread=False, center=False):
@@ -46,3 +33,5 @@ def color_cell(rgb, icon, thread=False, center=False):
         border = ""
     return "<div class='color_cell {}' style='background-color: {}; {} '>{}</div>".format(border, h, text, icon)
 
+def base_path():
+    return Path(__file__).parents[1]

@@ -1,15 +1,11 @@
 # Available palettes
 import json
-from pathlib import Path
 from PIL import Image
-
-
-
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-PALETTE_DIR = BASE_DIR.joinpath('palettes')
+from ih.helpers import base_path
 
 PALETTES = []
+PALETTE_DIR = base_path().joinpath("palettes")
+
 for f in PALETTE_DIR.glob("*.json"):
     PALETTES.append(f.stem)
 
@@ -30,10 +26,9 @@ def get_thread_path(palette_name):
     thread_image = THREAD_DEFAULT
     if palette_name in THREAD_OVERRIDE:
         thread_image = THREAD_OVERRIDE[palette_name]
-    return str(Path.cwd().joinpath("styling", thread_image))
+    return str(base_path().joinpath("styling", thread_image))
 
 def get_palette(palette_name):
-
     if palette_name in PALETTE_OVERRIDE.keys():
         palette = PALETTE_OVERRIDE[palette_name]
 
@@ -57,3 +52,17 @@ def display_palette(palette_name):
     palette = get_palette(palette_name)
     print(json.dumps(palette))
     # TODO visualise
+
+PALETTE_DATA = {}
+
+def thread_name(rgb, palette_name):
+    #if not PALETTE_DATA:
+    PALETTE_DATA = get_palette(palette_name)
+
+    for t in PALETTE_DATA:
+        if tuple(t['RGB']) == rgb:
+            return t
+
+    ## Return a basic thread type if thread not found in palette
+    return {"Name": str(rgb), "Code": "???"}
+
