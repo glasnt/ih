@@ -33,7 +33,7 @@ def get_palette(palette_name):
         palette = PALETTE_OVERRIDE[palette_name]
 
     if palette_name not in PALETTES:
-        raise("Invalid palette: %s. Choices: %s" % (palette_name, ", ".join(PALETTES)))
+        raise ValueError("Invalid palette: %s. Choices: %s" % (palette_name, ", ".join(PALETTES)))
 
     with open(PALETTE_DIR.joinpath("%s.json" % palette_name)) as f:
         palette = json.load(f)
