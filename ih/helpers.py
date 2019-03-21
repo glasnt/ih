@@ -2,6 +2,7 @@
 Helpers and values
 """
 import os
+import pkg_resources
 from pathlib import Path
 
 # A series of visually distinct characters, to populate the chart
@@ -33,5 +34,5 @@ def color_cell(rgb, icon, thread=False, center=False):
         border = ""
     return "<div class='color_cell {}' style='background-color: {}; {} '>{}</div>".format(border, h, text, icon)
 
-def base_path():
-    return Path(__file__).parents[1]
+def base_path(path):
+    return Path(pkg_resources.resource_filename('ih', path))

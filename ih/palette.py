@@ -4,7 +4,7 @@ from PIL import Image
 from ih.helpers import base_path
 
 PALETTES = []
-PALETTE_DIR = base_path().joinpath("palettes")
+PALETTE_DIR = base_path('palettes')
 
 for f in PALETTE_DIR.glob("*.json"):
     PALETTES.append(f.stem)
@@ -26,7 +26,7 @@ def get_thread_path(palette_name):
     thread_image = THREAD_DEFAULT
     if palette_name in THREAD_OVERRIDE:
         thread_image = THREAD_OVERRIDE[palette_name]
-    return str(base_path().joinpath("styling", thread_image))
+    return str(base_path('styling').joinpath(thread_image))
 
 def get_palette(palette_name):
     if palette_name in PALETTE_OVERRIDE.keys():

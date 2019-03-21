@@ -1,2 +1,2 @@
-include palettes/*
-include styling/*
+include ih/palettes/*
+include ih/styling/*

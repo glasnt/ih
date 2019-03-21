@@ -9,7 +9,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="ih",
-    version="0.0.0-dev7",
+    version="0.0.0-dev9",
     author="katie McLaughlin",
     author_email="katie@glasnt.com",
     description="A very persuasive package, for creating embroidery patterns",
@@ -17,13 +17,13 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/glasnt/ih",
     install_requires=['click', 'pillow'],
-    include_package_data=True,
     entry_points={
         'console_scripts': [
             "ih = ih.__main__:main"
         ]
     },
-    packages=setuptools.find_packages(),
+    packages=["ih"],
+    include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: BSD License",
