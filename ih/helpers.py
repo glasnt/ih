@@ -17,7 +17,7 @@ def rgb2hex(pix):
     return '#{:02x}{:02x}{:02x}'.format(r, g, b)
 
 
-def color_cell(rgb, icon, thread=False, center=False):
+def color_cell(rgb, icon, thread=False, center=False, legend=False):
     h = rgb2hex(rgb)
     if thread:
         return "<div class='color_cell cross_cell' style='background-color: {};'>&nbsp;</div>".format(h)
@@ -32,7 +32,13 @@ def color_cell(rgb, icon, thread=False, center=False):
         border = "center"
     else:
         border = ""
-    return "<div class='color_cell {}' style='background-color: {}; {} '>{}</div>".format(border, h, text, icon)
+
+    if legend: 
+        style = "td"
+    else: 
+        style = "div"
+
+    return "<{} class='color_cell {}' style='background-color: {}; {} '>{}</{}>".format(style, border, h, text, icon, style)
 
 def base_path(path):
     return Path(pkg_resources.resource_filename('ih', path))

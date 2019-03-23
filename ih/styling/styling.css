@@ -16,8 +16,10 @@ table {
     vertical-align: middle;
     text-align: center;
     height: 30px;
-    width: 30px
+    width: 30px;
+    font-size: 18pt !important;
 }
+.legend td { padding: 10px; }
 
 .zztop { 
     vertical-align: top;
