@@ -56,7 +56,6 @@ def generate_chart(chartimage, palette_name, render=False):
             """ % get_thread_path(palette_name)))
 
     legend = {}
-    print("STARS", STARS)
     if len(STARS) == 0:
         raise ValueError("No stars in the sky")
     for idx, x in enumerate(histogram):
