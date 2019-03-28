@@ -63,8 +63,35 @@ def generate_chart(chartimage, palette_name, render=False):
     legend = {}
     if len(STARS) == 0:
         raise ValueError("No stars in the sky")
+
+
+    styles = {}
+    after = {}
     for idx, x in enumerate(histogram):
+        rgb = x[1]
+        hex = rgb2hex(rgb)
+        star = STARS[idx % len(STARS)]
+        sclass = star_class(star)
+
+        
+        # Choose the best text colour
+        if (rgb[0]*0.299 + rgb[1]*0.587 + rgb[2]*0.114) > 186:
+            color = "black"
+        else:
+            color = "lightgray"
+        styles[sclass] = { "bg": hex, "c": color, "star": star}
+     
         legend[rgb2hex(x[1])] = STARS[idx % len(STARS)]
+
+    html.append("<style>/*Stars*/")
+    for _, x in enumerate(styles):
+        y = styles[x]
+        
+        html.append('.%s { background-color: %s; color: %s }' % (x, y["bg"], y["c"]))
+        html.append('.%s::after { content: "%s" }' % (x, y["star"]))
+        
+    html.append("</style>")
+    
     
     html.append('<div class="container">')
 
@@ -72,6 +99,7 @@ def generate_chart(chartimage, palette_name, render=False):
     html.append(('<tr><td>X</td><td># sts</td><td>skeins</td>'
                 '<td>{} code</td><td>{} name</td></tr>').format(palette_name, palette_name))
 
+    # Generate legend
     for idx, h in enumerate(reversed(histogram)):
         count, rgb = h
         color = rgb2hex(rgb)
@@ -79,7 +107,7 @@ def generate_chart(chartimage, palette_name, render=False):
         name, code = (thread["Name"], thread["Code"])
         skeins = ceil(count / 1000)
 
-        html.append(color_cell(rgb, legend[color], thread=False, legend=True) + '<td>{}</td><td>{}</td><td>{}</td><td>{}</td><tr>'.format(count, skeins, code, name))
+        html.append(color_cell(legend[color], thread=False, legend=True) + '<td>{}</td><td>{}</td><td>{}</td><td>{}</td><tr>'.format(count, skeins, code, name))
       
 
     html.append('</table></div>')
@@ -105,9 +133,9 @@ def generate_chart(chartimage, palette_name, render=False):
                     center_flag = True
                     CENTER = False
 
-            row.append(color_cell(rgb, legend[p], center=center_flag))
+            row.append(color_cell(star=legend[p], center=center_flag))
 
-        html.append("<div>" + "".join(row) + "</div>")
+        html.append("<div class='r'>" + "".join(row) + "</div>")
     html.append("</div></div>")
     return "\n".join(html) 
 

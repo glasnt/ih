@@ -17,7 +17,25 @@ def rgb2hex(pix):
     return '#{:02x}{:02x}{:02x}'.format(r, g, b)
 
 
-def color_cell(rgb, icon, thread=False, center=False, legend=False):
+def color_cell(star, center=False, legend=False, thread=False):
+    if legend: 
+        td = "td"
+    else: 
+        td = "div"
+
+    classes = f"s {star_class(star)}" 
+    if center: 
+        classes += " center"
+        
+
+    return f'<{td} class="{classes}"></{td}>'
+    
+
+
+def star_class(star):
+    return f"u{hex(ord(star))[2:]}"
+
+def color_cell2(rgb, icon, thread=False, center=False, legend=False):
     h = rgb2hex(rgb)
     if thread:
         return "<div class='color_cell cross_cell' style='background-color: {};'>&nbsp;</div>".format(h)

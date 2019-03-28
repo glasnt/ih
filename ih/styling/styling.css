@@ -1,38 +1,64 @@
-body { 
-    font-family: "Helvetica Neue"; 
+body {
+  font-family: "Helvetica Neue";
 }
 
 table {
-    border-collapse: collapse;
-    white-space: nowrap;
-    overflow: scroll;
+  border-collapse: collapse;
+  white-space: nowrap;
+  overflow: scroll;
 }
 
-.legend table, .legend th, .legend td, .chart table, .chart th, .chart td {
-/*    border: 1px solid black; */
-}
-.legend { 
-    vertical-align: top;
-}
-.legend td, .chart td {
-    vertical-align: middle;
-    text-align: center;
-    height: 30px;
-    width: 30px;
+.legend table,
+.legend th,
+.legend td {
+  border: 1px solid black;
 }
 
-.color_cell {
-    text-align: center;
-    display: inline-block;
-    line-height: 30px;
-    height: 30px; 
-    width: 30px;
-    box-shadow: inset 0px 0px 0px 1px black; 
-  /*  border-bottom: 1px solid black; 
-    border-right: 1px solid black; */
+.legend {
+  vertical-align: top;
 }
-.center { box-shadow:inset 0px 0px 0px 4px #f00;}
 
-.legend_div { padding: 10px; display: block }
-.debug { padding: 10px; display: inline-block }
-.chart { display: block }
+.legend td,
+.chart td {
+  vertical-align: middle;
+  text-align: center;
+  height: 30px;
+  width: 30px;
+}
+
+.legend .s {
+  border: none;
+  border: 1px solid black
+}
+
+.s {
+  text-align: center;
+  display: inline-block;
+  line-height: 30px;
+  height: 30px;
+  width: 30px;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.center {
+  box-shadow: inset 0px 0px 0px 4px #f00;
+}
+
+.legend_div {
+  padding: 10px;
+  display: block
+}
+
+.debug {
+  padding: 10px;
+  display: block
+}
+
+.chart {
+  display: inline-block;
+  border: 1px solid black;
+  border-right: none;
+  border-bottom: none;
+  border-top: 1px solid black
+}
