@@ -61,7 +61,7 @@ def preprocess_image(image, palette_name="wool", colorlimit=256, scale=1):
 def generate_chart(chartimage, palette_name, render=False):
     histogram = sorted(chartimage.getcolors())
 
-    html = ['<html><meta charset="utf-8">']
+    html = ['<html>']
 
     with open(base_path("styling").joinpath("styling.css")) as s:
         html.append("<style>" + "".join(s.readlines()) + "</style>")
@@ -131,8 +131,9 @@ def generate_chart(chartimage, palette_name, render=False):
         skeins = ceil(count / 1000)
 
         html.append(
-            color_cell(legend[color], thread=False, legend=True)
-            + "<td>{}</td><td>{}</td><td>{}</td><td>{}</td><tr>".format(
+            "<tr>" 
+            + color_cell(legend[color], thread=False, legend=True)
+            + "<td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(
                 count, skeins, code, name
             )
         )
@@ -166,7 +167,7 @@ def generate_chart(chartimage, palette_name, render=False):
             row.append(color_cell(star=legend[p], center=center_flag))
 
         html.append("<div class='r'>" + "".join(row) + "</div>")
-    html.append("</div></div>")
+    html.append("</div></div></html>")
     return "\n".join(html)
 
 
