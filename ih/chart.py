@@ -2,12 +2,18 @@ import json
 import click
 from textwrap import dedent
 
-from PIL import Image
 
-from math import ceil
+from PIL import Image, ImageOps
+
+from math import ceil, floor
 
 from ih.palette import *
 from ih.helpers import *
+
+# Guideline padding
+GUIDE = 10
+# Assuming no colour will be this in our palette.
+GUIDECOL = (0,0,0,0)
 
 
 def chart(
@@ -17,6 +23,7 @@ def chart(
     scale=1,
     colours=256,
     render=False,
+    guidelines=False,
     fileformat="html",
     save=True,
 ):
@@ -29,10 +36,10 @@ def chart(
 
     palette = get_palette(palette_name)
     chartimage = preprocess_image(
-        im, palette=palette, colorlimit=colours, scale=scale
+        im, palette=palette, colorlimit=colours, scale=scale, guidelines=guidelines
     )
 
-    chart = generate_chart(chartimage, palette_name, palette, render)
+    chart = generate_chart(chartimage, palette_name, palette, render, guidelines)
 
     if save:
         saved = save_chart(chart, image_name, fileformat)
@@ -41,11 +48,11 @@ def chart(
         return chart
 
 
-def preprocess_image(image, palette=None, colorlimit=256, scale=1):
-
+def preprocess_image(image, palette=None, colorlimit=256, scale=1, guidelines=False):
     palette_image = get_palette_image(palette)
     im = image.transpose(Image.FLIP_TOP_BOTTOM).transpose(Image.ROTATE_270)
     im = im.resize((int(im.width / scale), int(im.height / scale)))
+
     im = (
         im.convert("RGB")
         .convert("P", palette=Image.ADAPTIVE, colors=colorlimit)
@@ -57,10 +64,10 @@ def preprocess_image(image, palette=None, colorlimit=256, scale=1):
     return im._new(_im).convert("RGB")
 
 
-def generate_chart(chartimage, palette_name, palette, render=False):
+def generate_chart(chartimage, palette_name, palette, render=False, guidelines=False):
     histogram = sorted(chartimage.getcolors())
 
-    html = ['<html>']
+    html = ['<html><meta charset="UTF-8">']
 
     with open(base_path("styling").joinpath("styling.css")) as s:
         html.append("<style>" + "".join(s.readlines()) + "</style>")
@@ -114,7 +121,7 @@ def generate_chart(chartimage, palette_name, palette, render=False):
     html.append('<div class="legend_div"><table class="legend">')
     html.append(
         (
-            "<tr><td>X</td><td>sitches</td><td>skeins</td>"
+            "<tr><td>X</td><td>sitches</td>"
             "<td>{} code</td></tr>"
         ).format(palette_name)
     )
@@ -125,13 +132,12 @@ def generate_chart(chartimage, palette_name, palette, render=False):
         color = rgb2hex(rgb)
         thread = thread_name(rgb, palette)
         code = thread["code"]
-        skeins = ceil(count / 1000)
 
         html.append(
             "<tr>" 
             + color_cell(legend[color], thread=False, legend=True)
-            + "<td>{}</td><td>{}</td><td>{}</td></tr>".format(
-                count, skeins, code 
+            + "<td>{}</td><td>{}</td></tr>".format(
+                count, code 
             )
         )
 
@@ -148,11 +154,38 @@ def generate_chart(chartimage, palette_name, palette, render=False):
 
     html.append('<div class="chart">')
 
+    if guidelines:
+        chartimage = chartimage.convert("RGBA")
+        xpad = GUIDE - (chartimage.width % GUIDE)
+        ypad = GUIDE - (chartimage.height % GUIDE)
+
+        padding = (
+            floor(ypad/2),
+            ceil(xpad/2),
+            ceil(ypad/2),
+            floor(xpad/2)
+            )
+
+        chartimage = ImageOps.expand(chartimage, padding, fill=GUIDECOL)
+
     CENTER = True
+
     for x in range(0, chartimage.width):
         row = []
         for y in range(0, chartimage.height):
+
+            guide_x, guide_y = False, False
+            if guidelines: 
+                if x % GUIDE == GUIDE - 1:
+                    guide_x = True
+                if y % GUIDE == GUIDE - 1:
+                    guide_y = True
+
             rgb = chartimage.getpixel((x, y))
+
+            if rgb == GUIDECOL:
+                row.append(guide_cell([guide_x, guide_y]))
+                continue
             p = rgb2hex(rgb)
 
             center_flag = False
@@ -162,7 +195,7 @@ def generate_chart(chartimage, palette_name, palette, render=False):
                         center_flag = True
                         CENTER = False
 
-            row.append(color_cell(star=legend[p], center=center_flag))
+            row.append(color_cell(star=legend[p], center=center_flag, guide=[guide_x, guide_y]))
 
         html.append("<div class='r'>" + "".join(row) + "</div>")
     html.append("</div></div></html>")

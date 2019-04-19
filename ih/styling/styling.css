@@ -41,8 +41,8 @@ table {
   line-height: 30px;
   height: 30px;
   width: 30px;
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
+  border-bottom: 1px solid grey;
+  border-right: 1px solid grey;
 }
 
 .center {
@@ -58,11 +58,12 @@ table {
   padding: 10px;
   display: block
 }
-
 .chart {
   display: inline-block;
   border: 1px solid black;
   border-right: none;
   border-bottom: none;
-  border-top: 1px solid black
+  border-top: 1px solid black;
 }
+.gx { border-bottom: 1px dashed black }
+.gy { border-right: 1px dashed black }

@@ -20,13 +20,15 @@ from ih.chart import *
     default=False,
     help="Render a preview (using thread images",
 )
-def main(image, palette, scale, colours, render):
+@click.option("--guidelines", "-g", is_flag=True, default=False, help="Render guidelines")
+def main(image, palette, scale, colours, render, guidelines):
     result = chart(
         image_name=image,
         palette_name=palette,
         scale=scale,
         colours=colours,
         render=render,
+        guidelines=guidelines
     )
 
     print("Result: %s" % result)

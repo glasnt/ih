@@ -54,7 +54,7 @@ STARS = [
 
 def rgb2hex(pix):
     """Given a tuple of r, g, b, return the hex value """
-    r, g, b = pix
+    r, g, b = pix[:3]
     return "#{:02x}{:02x}{:02x}".format(r, g, b)
 
 
@@ -62,8 +62,16 @@ def hex2rgb(h):
     h = h.strip("#")
     return list(int(h[i:i+2], 16) for i in (0, 2, 4))
 
+def guide_cell(guide):
+    classes = "s g"
+    if guide[0]:
+        classes += " gx"
+    if guide[1]:
+        classes += " gy"
+    return f'<div class="{classes}">&nbsp;</div>'
+    
 
-def color_cell(star, center=False, legend=False, thread=False):
+def color_cell(star="*", center=False, legend=False, thread=False, guide=[False,False]):
     if legend:
         td = "td"
     else:
@@ -72,6 +80,10 @@ def color_cell(star, center=False, legend=False, thread=False):
     classes = f"s {star_class(star)}"
     if center:
         classes += " center"
+    if guide[0]:
+        classes += " gx"
+    if guide[1]:
+        classes += " gy"
 
     return f'<{td} class="{classes}"></{td}>'
 
