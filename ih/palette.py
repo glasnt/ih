@@ -15,7 +15,7 @@ PALETTE_OVERRIDE = {"🧵": "floss", "🧶": "wool", "🦙": "alpaca"}
 
 # Thread render overrides
 THREAD_DEFAULT = "wool.png"
-THREAD_OVERRIDE = {"floss": "floss.png"}
+THREAD_OVERRIDE = {"floss": "floss.png", "perler": "perler.png"}
 
 # Return the location of the image for the mock representation of the thread.
 def get_thread_image_path(palette_name):

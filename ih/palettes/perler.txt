@@ -1,0 +1,57 @@
+White (P01),#f1f1f1
+Cream (P02),#e0dea9
+Yellow (P03),#ecd800
+Orange (P04),#ed6120
+Red (P05),#bf2e40
+Bubblegum (P06),#dd669b
+Purple (P07),#604089
+Dark Blue (P08),#2b3f87
+Light Blue (P09),#3370c0
+Dark Green (P10),#1c753e
+Pearl Coral (P100),#f97e79
+Pearl Light Blue (P101),#7aaea2
+Pearl Green (p102),#84b791
+Pearl Yellow (P103),#cac033
+Pearl Light Pink (P104),#d7a8a2
+Silver (P105),#777b81
+Light Green (P11),#56ba9f
+Brown (P12),#513931
+Grey (P17),#8a8d91
+Black (P18),#2e2f32
+Rust (P20),#8c372c
+Light Brown (P21),#815d34
+Peach (P33),#eebab2
+Tan (P35),#bc9371
+Magenta (P38),#f22a7b
+Neon Yellow (P47),#dce002
+Neon Orange (P48),#ff7700
+Neon Green (P49),#019e43
+Neon Pink (P50),#ff3991
+Pastel Blue (P52),#5390d1
+Pastel Green (P53),#76c882
+Pastel Lavender (P54),#8a72c1
+Pastel Yellow (P56),#fef875
+Chedder (P57),#f1aa0c
+Toothpaste (P58),#93c8d4
+Hot Coral (P59),#ff3851
+Plum (P60),#a24b9c
+Kiwi Lime (P61),#6cbe13
+Cyan (aka Turquoise) (P62),#2b89c6
+Blush (P63),#ff8285
+Periwinkle Blue (P70),#647cbe
+Glow Green (P75),#bec696
+Light Pink (P79),#f6b3dd
+Bright Green (P80),#4fad42
+Light Gray (P81),#b1b5b2
+Evergreen (P179),#355343
+Lavender (P82),#ad98d4
+Pink (P83),#e44892
+Gold (P85),#bb7634
+Raspberry (P88),#a53061
+Butterscotch (P90),#d48437
+Parrot Green (P91),#067c81
+Dark Grey (P92),#4d5156
+Blueberry Cream (P93),#8297d9
+Cranapple (P96),#803245
+Prickly Pear (P97),#bdda01
+Sand (P98),#e4b690
