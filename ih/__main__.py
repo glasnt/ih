@@ -11,7 +11,7 @@ from ih.chart import *
 )
 @click.option("--scale", "-s", default=1, help="Rescale factor. Default: 1")
 @click.option(
-    "--colours", "-c", default=256, help="Limit palette to N colors. Default: 256"
+    "--colours", "-c", default=256, help="Limit palette to at most N colors. Default: 256"
 )
 @click.option(
     "--render",

@@ -58,6 +58,11 @@ def rgb2hex(pix):
     return "#{:02x}{:02x}{:02x}".format(r, g, b)
 
 
+def hex2rgb(h):
+    h = h.strip("#")
+    return list(int(h[i:i+2], 16) for i in (0, 2, 4))
+
+
 def color_cell(star, center=False, legend=False, thread=False):
     if legend:
         td = "td"

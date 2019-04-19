@@ -27,11 +27,12 @@ def chart(
     else:
         raise ValueError("Must provide an image filename or Image object")
 
+    palette = get_palette(palette_name)
     chartimage = preprocess_image(
-        im, palette_name=palette_name, colorlimit=colours, scale=scale
+        im, palette=palette, colorlimit=colours, scale=scale
     )
 
-    chart = generate_chart(chartimage, palette_name, render)
+    chart = generate_chart(chartimage, palette_name, palette, render)
 
     if save:
         saved = save_chart(chart, image_name, fileformat)
@@ -40,11 +41,9 @@ def chart(
         return chart
 
 
-def preprocess_image(image, palette_name="wool", colorlimit=256, scale=1):
+def preprocess_image(image, palette=None, colorlimit=256, scale=1):
 
-    palette = get_palette_image(palette_name)
-
-    # magic, 'cept grey
+    palette_image = get_palette_image(palette)
     im = image.transpose(Image.FLIP_TOP_BOTTOM).transpose(Image.ROTATE_270)
     im = im.resize((int(im.width / scale), int(im.height / scale)))
     im = (
@@ -53,12 +52,12 @@ def preprocess_image(image, palette_name="wool", colorlimit=256, scale=1):
         .convert("RGB")
     )
 
-    _im = im.im.convert("P", 0, palette.im)  # HACK, quantize fixes
+    _im = im.im.convert("P", 0, palette_image.im)
 
     return im._new(_im).convert("RGB")
 
 
-def generate_chart(chartimage, palette_name, render=False):
+def generate_chart(chartimage, palette_name, palette, render=False):
     histogram = sorted(chartimage.getcolors())
 
     html = ['<html>']
@@ -71,26 +70,23 @@ def generate_chart(chartimage, palette_name, render=False):
             dedent(
                 """
             <style>
-            .chart {  
+            .s {  
                 background-image: url('%s'); 
                 background-size: cover; 
                 border: none; 
             }
             </style>
             """
-                % get_thread_path(palette_name)
+                % get_thread_image(palette_name)
             )
         )
 
     legend = {}
-    if len(STARS) == 0:
-        raise ValueError("No stars in the sky")
-
     styles = {}
     after = {}
     for idx, x in enumerate(histogram):
         rgb = x[1]
-        hex = rgb2hex(rgb)
+        h = rgb2hex(rgb)
         star = STARS[idx % len(STARS)]
         sclass = star_class(star)
 
@@ -99,16 +95,17 @@ def generate_chart(chartimage, palette_name, render=False):
             color = "black"
         else:
             color = "lightgray"
-        styles[sclass] = {"bg": hex, "c": color, "star": star}
+        styles[sclass] = {"bg": h, "c": color, "star": star}
 
         legend[rgb2hex(x[1])] = STARS[idx % len(STARS)]
 
-    html.append("<style>/*Stars*/")
+    html.append("<style>")
     for _, x in enumerate(styles):
         y = styles[x]
 
         html.append(".%s { background-color: %s; color: %s }" % (x, y["bg"], y["c"]))
-        html.append('.%s::after { content: "%s" }' % (x, y["star"]))
+        if not render:
+            html.append('.%s::after { content: "%s" }' % (x, y["star"]))
 
     html.append("</style>")
 
@@ -117,24 +114,24 @@ def generate_chart(chartimage, palette_name, render=False):
     html.append('<div class="legend_div"><table class="legend">')
     html.append(
         (
-            "<tr><td>X</td><td># sts</td><td>skeins</td>"
-            "<td>{} code</td><td>{} name</td></tr>"
-        ).format(palette_name, palette_name)
+            "<tr><td>X</td><td>sitches</td><td>skeins</td>"
+            "<td>{} code</td></tr>"
+        ).format(palette_name)
     )
 
     # Generate legend
     for idx, h in enumerate(reversed(histogram)):
         count, rgb = h
         color = rgb2hex(rgb)
-        thread = thread_name(rgb, palette_name)
-        name, code = (thread["Name"], thread["Code"])
+        thread = thread_name(rgb, palette)
+        code = thread["code"]
         skeins = ceil(count / 1000)
 
         html.append(
             "<tr>" 
             + color_cell(legend[color], thread=False, legend=True)
-            + "<td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(
-                count, skeins, code, name
+            + "<td>{}</td><td>{}</td><td>{}</td></tr>".format(
+                count, skeins, code 
             )
         )
 
@@ -159,10 +156,11 @@ def generate_chart(chartimage, palette_name, render=False):
             p = rgb2hex(rgb)
 
             center_flag = False
-            if CENTER:
-                if chartimage.height / 2 <= y and chartimage.width / 2 <= x:
-                    center_flag = True
-                    CENTER = False
+            if not render:
+                if CENTER:
+                    if chartimage.height / 2 <= y and chartimage.width / 2 <= x:
+                        center_flag = True
+                        CENTER = False
 
             row.append(color_cell(star=legend[p], center=center_flag))
 
