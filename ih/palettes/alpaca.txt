@@ -1,0 +1,11 @@
+White,#f9f7f1
+Light Fawn,#f6dc98
+Medium Fawn,#f3ce75
+Dark Fawn,#cd9d37
+Light Brown,#dc9c56
+Medium Brown,#c28142
+Dark Brown,#914f12
+Light Grey,#d7cecb
+Medium Grey,#c0b3ae
+Dark Grey,#917b73
+True Black,#361f0e
