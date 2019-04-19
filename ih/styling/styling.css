@@ -28,6 +28,7 @@ table {
 
 .r { 
   white-space: nowrap; 
+  height: 30px;
 }
 
 .legend .s {

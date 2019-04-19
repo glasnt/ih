@@ -27,6 +27,10 @@ def chart(
     fileformat="html",
     save=True,
 ):
+    # can't have both guidelines and rendering
+    if render:
+        guidelines=False
+
     if image_name:
         im = Image.open(image_name)
     elif image_obj:
