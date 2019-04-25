@@ -60,7 +60,8 @@ def rgb2hex(pix):
 
 def hex2rgb(h):
     h = h.strip("#")
-    return list(int(h[i:i+2], 16) for i in (0, 2, 4))
+    return list(int(h[i : i + 2], 16) for i in (0, 2, 4))
+
 
 def guide_cell(guide):
     classes = "s g"
@@ -69,9 +70,11 @@ def guide_cell(guide):
     if guide[1]:
         classes += " gy"
     return f'<div class="{classes}">&nbsp;</div>'
-    
 
-def color_cell(star="*", center=False, legend=False, thread=False, guide=[False,False]):
+
+def color_cell(
+    star="*", center=False, legend=False, thread=False, guide=[False, False]
+):
     if legend:
         td = "td"
     else:

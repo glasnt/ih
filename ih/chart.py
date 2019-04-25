@@ -13,7 +13,7 @@ from ih.helpers import *
 # Guideline padding
 GUIDE = 10
 # Assuming no colour will be this in our palette.
-GUIDECOL = (0,0,0,0)
+GUIDECOL = (0, 0, 0, 0)
 
 
 def chart(
@@ -29,7 +29,7 @@ def chart(
 ):
     # can't have both guidelines and rendering
     if render:
-        guidelines=False
+        guidelines = False
 
     if image_name:
         im = Image.open(image_name)
@@ -124,10 +124,7 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
 
     html.append('<div class="legend_div"><table class="legend">')
     html.append(
-        (
-            "<tr><td>X</td><td>sitches</td>"
-            "<td>{} code</td></tr>"
-        ).format(palette_name)
+        ("<tr><td>X</td><td>sitches</td>" "<td>{} code</td></tr>").format(palette_name)
     )
 
     # Generate legend
@@ -138,11 +135,9 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
         code = thread["code"]
 
         html.append(
-            "<tr>" 
+            "<tr>"
             + color_cell(legend[color], thread=False, legend=True)
-            + "<td>{}</td><td>{}</td></tr>".format(
-                count, code 
-            )
+            + "<td>{}</td><td>{}</td></tr>".format(count, code)
         )
 
     html.append("</table></div>")
@@ -163,12 +158,7 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
         xpad = GUIDE - (chartimage.width % GUIDE)
         ypad = GUIDE - (chartimage.height % GUIDE)
 
-        padding = (
-            floor(ypad/2),
-            ceil(xpad/2),
-            ceil(ypad/2),
-            floor(xpad/2)
-            )
+        padding = (floor(ypad / 2), ceil(xpad / 2), ceil(ypad / 2), floor(xpad / 2))
 
         chartimage = ImageOps.expand(chartimage, padding, fill=GUIDECOL)
 
@@ -179,7 +169,7 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
         for y in range(0, chartimage.height):
 
             guide_x, guide_y = False, False
-            if guidelines: 
+            if guidelines:
                 if x % GUIDE == GUIDE - 1:
                     guide_x = True
                 if y % GUIDE == GUIDE - 1:
@@ -199,7 +189,9 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
                         center_flag = True
                         CENTER = False
 
-            row.append(color_cell(star=legend[p], center=center_flag, guide=[guide_x, guide_y]))
+            row.append(
+                color_cell(star=legend[p], center=center_flag, guide=[guide_x, guide_y])
+            )
 
         html.append("<div class='r'>" + "".join(row) + "</div>")
     html.append("</div></div></html>")

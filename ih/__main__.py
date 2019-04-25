@@ -11,7 +11,10 @@ from ih.chart import *
 )
 @click.option("--scale", "-s", default=1, help="Rescale factor. Default: 1")
 @click.option(
-    "--colours", "-c", default=256, help="Limit palette to at most N colors. Default: 256"
+    "--colours",
+    "-c",
+    default=256,
+    help="Limit palette to at most N colors. Default: 256",
 )
 @click.option(
     "--render",
@@ -20,7 +23,9 @@ from ih.chart import *
     default=False,
     help="Render a preview (using thread images",
 )
-@click.option("--guidelines", "-g", is_flag=True, default=False, help="Render guidelines")
+@click.option(
+    "--guidelines", "-g", is_flag=True, default=False, help="Render guidelines"
+)
 def main(image, palette, scale, colours, render, guidelines):
     result = chart(
         image_name=image,
@@ -28,7 +33,7 @@ def main(image, palette, scale, colours, render, guidelines):
         scale=scale,
         colours=colours,
         render=render,
-        guidelines=guidelines
+        guidelines=guidelines,
     )
 
     print("Result: %s" % result)
