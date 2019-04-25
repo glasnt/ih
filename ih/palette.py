@@ -17,7 +17,7 @@ THREAD_DEFAULT = "wool.png"
 THREAD_OVERRIDE = {}
 for p in PALETTES:
     img = base_path("styling").joinpath(f"{p}.png")
-    if img.exists:
+    if img.exists():
         THREAD_OVERRIDE[p] = img
 
 # Return the location of the image for the mock representation of the thread.
