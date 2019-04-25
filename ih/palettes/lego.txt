@@ -1,0 +1,46 @@
+Black (302426),#212121
+Blue (302423),#0057A6
+Bright Green (6223741),#10CB31
+Bright Light Blue (6184484),#9FC3E9
+Bright Light Orange (6073040),#F7BA30
+Bright Light Yellow (6058014),#F3E055
+Bright Pink (4245305),#FFBBFF
+Bright Pink (6031883),#FFBBFF
+Coral (6258091),#F88379
+Dark Azure (6151664),#3399FF
+Dark Blue (4184108),#143044
+Dark Bluish Gray (4210719),#595D60
+Dark Brown (6194729),#330000
+Dark Gray (4143684),#6B5A5A
+Dark Green (6055169),#2E5543
+Dark Orange (6186012),#B35408
+Dark Pink (6217797),#C87080
+Dark Purple (4224857),#5F2683
+Dark Purple (6231376),#5F2683
+Dark Red (4183901),#6A0E15
+Dark Red (4539114),#6A0E15
+Dark Tan (4549436),#907450
+Dark Turquoise (6213778),#008A80
+Green (302428),#00642E
+Light Aqua (6058016),#CCFFFF
+Light Bluish Gray (4211399),#AFB5C7
+Light Gray (302402),#9C9C9C
+Lime (4261450),#A6CA55
+Lime (4621557),#A6CA55
+Magenta (6096942),#B52952
+Medium Azure (6097493),#42C0FB
+Medium Blue (4179826),#61AFFF
+Medium Dark Flesh (6215606),#E78B3E
+Medium Lavender (4619521),#885E9E
+Medium Orange (4184022),#FFA531
+Olive Green (6058245),#7C9051
+Orange (4524929),#FF7E14
+Pearl Gold (6069887),#E79500
+Red (302421),#B30006
+Reddish Brown (4221744),#89351D
+Sand Green (6099189),#76A290
+Tan (4159553),#DEC69C
+Very Light Bluish Gray (4542128),#E4E8E8
+White (302401),#FFFFFF
+Yellow (302424),#F7D117
+Yellowish Green (6069255),#DFEEA5

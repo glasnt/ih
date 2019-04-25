@@ -12,6 +12,7 @@ from ih.helpers import *
 
 # Guideline padding
 GUIDE = 10
+
 # Assuming no colour will be this in our palette.
 GUIDECOL = (0, 0, 0, 0)
 
@@ -124,7 +125,10 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
 
     html.append('<div class="legend_div"><table class="legend">')
     html.append(
-        ("<tr><td>X</td><td>sitches</td>" "<td>{} code</td></tr>").format(palette_name)
+        (
+            f"<tr><td>X</td><td>{get_identity_name(palette_name)}</td>"
+            f"<td>{palette_name} code</td></tr>"
+        )
     )
 
     # Generate legend

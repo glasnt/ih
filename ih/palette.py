@@ -13,12 +13,26 @@ for f in PALETTE_DIR.glob("*.txt"):
 # Palette overrides (emoji)
 PALETTE_OVERRIDE = {"🧵": "floss", "🧶": "wool", "🦙": "alpaca"}
 
+
 THREAD_DEFAULT = "wool.png"
 THREAD_OVERRIDE = {}
 for p in PALETTES:
     img = base_path("styling").joinpath(f"{p}.png")
     if img.exists():
         THREAD_OVERRIDE[p] = img
+
+
+DEFAULT_IDENTITY = "stitches"
+IDENTITY_OVERRIDE = {"lego": "bricks", "perler": "beads"}
+
+
+# Return the name of the identity. E.g, floss is stitches, lego is bricks
+def get_identity_name(palette_name):
+    if palette_name in IDENTITY_OVERRIDE.keys():
+        return IDENTITY_OVERRIDE[palette_name]
+    else:
+        return DEFAULT_IDENTITY
+
 
 # Return the location of the image for the mock representation of the thread.
 def get_thread_image_path(palette_name):
