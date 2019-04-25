@@ -13,16 +13,20 @@ for f in PALETTE_DIR.glob("*.txt"):
 # Palette overrides (emoji)
 PALETTE_OVERRIDE = {"🧵": "floss", "🧶": "wool", "🦙": "alpaca"}
 
-# Thread render overrides
 THREAD_DEFAULT = "wool.png"
-THREAD_OVERRIDE = {"floss": "floss.png", "perler": "perler.png"}
+THREAD_OVERRIDE = {}
+for p in PALETTES:
+    img = base_path("styling").joinpath(f"{p}.png")
+    if img.exists:
+        THREAD_OVERRIDE[p] = img
 
 # Return the location of the image for the mock representation of the thread.
 def get_thread_image_path(palette_name):
     thread_image = THREAD_DEFAULT
     if palette_name in THREAD_OVERRIDE:
-        thread_image = THREAD_OVERRIDE[palette_name]
+        return THREAD_OVERRIDE[palette_name]
     return str(base_path("styling").joinpath(thread_image))
+
 
 def get_thread_image(palette_name):
     path = get_thread_image_path(palette_name)
@@ -46,18 +50,15 @@ def get_palette(palette_name):
         for line in data:
             code, h = line
             rgb = hex2rgb(h)
-            palette.append({
-                "rgb": rgb, 
-                "hex": h,
-                "code": code })
+            palette.append({"rgb": rgb, "hex": h, "code": code})
 
     return palette
 
 
 # get a base image that had the palette we want
-# Math involved: 
+# Math involved:
 # putpalette requires a flattened list of up to 256 triples for RGB
-# so: 
+# so:
 #  * get our RGB values
 #  * flatten
 #  * pad the list to 256 triples, if required
@@ -66,9 +67,9 @@ def get_palette(palette_name):
 # Math: https://stackoverflow.com/a/55755789/124019
 def get_palette_image(palette):
     data = (
-            sum([x["rgb"] for x in palette], []) +
-            (palette[-1]["rgb"] * (256 - len(palette)))
-           )[:256 * 3] 
+        sum([x["rgb"] for x in palette], [])
+        + (palette[-1]["rgb"] * (256 - len(palette)))
+    )[: 256 * 3]
     image = Image.new("P", (16, 16))
     image.putpalette(data)
 
