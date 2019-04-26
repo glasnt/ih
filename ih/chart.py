@@ -87,6 +87,8 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
                 background-size: cover; 
                 border: none; 
             }
+            .r { border: none }
+            .chart { border: 1px solid black }
             </style>
             """
                 % get_thread_image(palette_name)
@@ -122,12 +124,12 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
     html.append("</style>")
 
     html.append('<div class="container">')
-
+    html.append('<div class="left-content">')
     html.append('<div class="legend_div"><table class="legend">')
     html.append(
         (
-            f"<tr><td>X</td><td>{get_identity_name(palette_name)}</td>"
-            f"<td>{palette_name} code</td></tr>"
+            f"<tr><td>X</td><td class='label'>{get_identity_name(palette_name)}</td>"
+            f"<td class='label'>{palette_name} code</td></tr>"
         )
     )
 
@@ -148,14 +150,13 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
 
     # Debug
     import pkg_resources
-
     ih_version = pkg_resources.require("ih")[0].version
-
     html.append(
         f'<div class="debug">Image: {chartimage.width} x {chartimage.height}. ih version {ih_version}</div>'
     )
+    html.append('</div>') # end left-content
 
-    html.append('<div class="chart">')
+    html.append('<div class="right-content"><div class="chart">')
 
     if guidelines:
         chartimage = chartimage.convert("RGBA")
@@ -189,7 +190,7 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
             center_flag = False
             if not render:
                 if CENTER:
-                    if chartimage.height / 2 <= y and chartimage.width / 2 <= x:
+                    if chartimage.height / 2 - 1 <= y and chartimage.width / 2 - 1 <= x:
                         center_flag = True
                         CENTER = False
 
@@ -198,7 +199,7 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
             )
 
         html.append("<div class='r'>" + "".join(row) + "</div>")
-    html.append("</div></div></html>")
+    html.append("</div></div></div></html>")
     return "\n".join(html)
 
 

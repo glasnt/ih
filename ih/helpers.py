@@ -64,7 +64,7 @@ def hex2rgb(h):
 
 
 def guide_cell(guide):
-    classes = "s g"
+    classes = "s"
     if guide[0]:
         classes += " gx"
     if guide[1]:
@@ -78,7 +78,7 @@ def color_cell(
     if legend:
         td = "td"
     else:
-        td = "div"
+        td = "span"
 
     classes = f"s {star_class(star)}"
     if center:
