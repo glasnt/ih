@@ -15,3 +15,13 @@ Disney's [_Lilo and Stitch_](https://www.youtube.com/watch?v=ItYmxezZ7QA):
 > Jumba: Uh, he's very persuasive.
 
 
+
+## Attributions
+
+LILO & STITCH is a trademark of Disney Enterprises, Inc.
+
+LEGO® is a registered trademark of The Lego Group. 
+
+PERLER BEADS is a trademark of Stitch Acquisition Group. 
+
+
