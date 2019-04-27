@@ -127,6 +127,8 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
         if not render:
             html.append('.%s::after { content: "%s" }' % (x, y["star"]))
 
+    html.append('.%s::after { content: "%s" }' % (star_class(WHITESTAR), WHITESTAR))
+
     html.append("</style>")
 
     html.append('<div class="container">')
@@ -148,7 +150,7 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
 
         html.append(
             "<tr>"
-            + color_cell(legend[color], thread=False, legend=True)
+            + color_cell(color=color, star=legend[color], thread=False, legend=True)
             + "<td>{}</td><td>{}</td></tr>".format(count, code)
         )
 
@@ -202,7 +204,7 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
                         CENTER = False
 
             row.append(
-                color_cell(star=legend[p], center=center_flag, guide=[guide_x, guide_y])
+                color_cell(color=p, star=legend[p], center=center_flag, guide=[guide_x, guide_y])
             )
 
         html.append("<div class='r'>" + "".join(row) + "</div>")
