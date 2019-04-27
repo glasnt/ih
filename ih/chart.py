@@ -58,6 +58,12 @@ def preprocess_image(image, palette=None, colorlimit=256, scale=1, guidelines=Fa
     im = image.transpose(Image.FLIP_TOP_BOTTOM).transpose(Image.ROTATE_270)
     im = im.resize((int(im.width / scale), int(im.height / scale)))
 
+    # Remove black transparency issues with this one weird trick. 
+    alpha = im.convert("RGBA").split()[-1]
+    bg = Image.new("RGBA", im.size, (255, 255, 255, 255))
+    bg.paste(im, mask=alpha)
+    im = bg
+
     im = (
         im.convert("RGB")
         .convert("P", palette=Image.ADAPTIVE, colors=colorlimit)
@@ -150,11 +156,12 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
 
     # Debug
     import pkg_resources
+
     ih_version = pkg_resources.require("ih")[0].version
     html.append(
         f'<div class="debug">Image: {chartimage.width} x {chartimage.height}. ih version {ih_version}</div>'
     )
-    html.append('</div>') # end left-content
+    html.append("</div>")  # end left-content
 
     html.append('<div class="right-content"><div class="chart">')
 
