@@ -127,7 +127,8 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
         if not render:
             html.append('.%s::after { content: "%s" }' % (x, y["star"]))
 
-    html.append('.%s::after { content: "%s" }' % (star_class(WHITESTAR), WHITESTAR))
+    if not render:
+        html.append('.%s::after { content: "%s" }' % (star_class(WHITESTAR), WHITESTAR))
 
     html.append("</style>")
 
