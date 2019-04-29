@@ -162,7 +162,7 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
 
     ih_version = pkg_resources.require("ih")[0].version
     html.append(
-        f'<div class="debug">Image: {chartimage.width} x {chartimage.height}. ih version {ih_version}</div>'
+        f'<div class="debug">Image: {chartimage.height} x {chartimage.width}. ih version {ih_version}</div>'
     )
     html.append("</div>")  # end left-content
 
