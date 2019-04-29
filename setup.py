@@ -9,7 +9,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="ih",
-    version="0.0.0-dev23",
+    version="0.0.0-dev24",
     author="Katie McLaughlin",
     author_email="katie@glasnt.com",
     description="A very persuasive package, for creating embroidery patterns",
