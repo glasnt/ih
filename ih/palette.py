@@ -84,7 +84,7 @@ def get_palette_image(palette):
         sum([x["rgb"] for x in palette], [])
         + (palette[-1]["rgb"] * (256 - len(palette)))
     )[: 256 * 3]
-    image = Image.new("P", (16, 16))
+    image = Image.new("P", (1,1))
     image.putpalette(data)
 
     return image
