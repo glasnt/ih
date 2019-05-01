@@ -4,6 +4,26 @@ A very persuasive package, for creating embroidery patterns.
 
 [As seen at PyCon US 2019](https://us.pycon.org/2019/schedule/presentation/229/)
 
+## CLI Usage
+
+```
+Usage: ih [OPTIONS] IMAGE
+
+Options:
+  -p, --palette TEXT     Choices: lego, floss, perler, alpaca, wool. Default:
+                         wool
+  -s, --scale INTEGER    Rescale factor. Default: 1
+  -c, --colours INTEGER  Limit palette to at most N colors. Default: 256
+  -r, --render           Render a preview (using thread images)
+  -g, --guidelines       Render guidelines
+  --help                 Show this message and exit.
+```
+
+## As A Service
+
+See [ih-aas](https://github.com/glasnt/ih-aas)
+
+
 ## Package name origin
 
 Disney's [_Lilo and Stitch_](https://www.youtube.com/watch?v=ItYmxezZ7QA): 

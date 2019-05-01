@@ -13,7 +13,7 @@ for f in PALETTE_DIR.glob("*.txt"):
 # Palette overrides (emoji)
 PALETTE_OVERRIDE = {"🧵": "floss", "🧶": "wool", "🦙": "alpaca"}
 
-
+PALETTE_DEFAULT = "wool"
 THREAD_DEFAULT = "wool.png"
 THREAD_OVERRIDE = {}
 for p in PALETTES:

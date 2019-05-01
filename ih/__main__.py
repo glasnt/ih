@@ -6,8 +6,8 @@ from ih.chart import *
 @click.option(
     "--palette",
     "-p",
-    default="wool",
-    help="Choices: %s. Default: wool" % ", ".join(PALETTES),
+    default=PALETTE_DEFAULT,
+    help=f"Choices: {', '.join(PALETTES)}. Default: {PALETTE_DEFAULT}"
 )
 @click.option("--scale", "-s", default=1, help="Rescale factor. Default: 1")
 @click.option(
@@ -21,7 +21,7 @@ from ih.chart import *
     "-r",
     is_flag=True,
     default=False,
-    help="Render a preview (using thread images",
+    help="Render a preview (using thread images)",
 )
 @click.option(
     "--guidelines", "-g", is_flag=True, default=False, help="Render guidelines"

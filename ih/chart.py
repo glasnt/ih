@@ -20,7 +20,7 @@ GUIDECOL = (0, 0, 0, 0)
 def chart(
     image_name=None,
     image_obj=None,
-    palette_name="wool",
+    palette_name=PALETTE_DEFAULT,
     scale=1,
     colours=256,
     render=False,
