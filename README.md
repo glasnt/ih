@@ -4,6 +4,21 @@ A very persuasive package, for creating embroidery patterns.
 
 [As seen at PyCon US 2019](https://us.pycon.org/2019/schedule/presentation/229/)
 
+## Setup
+
+### Using Pipenv
+
+```
+$ pipenv sync
+$ pipenv shell
+(ih) $ python ./ih
+Usage: ih [OPTIONS] IMAGE
+Try "ih --help" for help.
+
+Error: Missing argument "IMAGE".
+$
+```
+
 ## CLI Usage
 
 ```
