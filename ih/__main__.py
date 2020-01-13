@@ -1,3 +1,6 @@
+import sys
+sys.path.append('.')
+
 from ih.chart import *
 
 
@@ -37,3 +40,5 @@ def main(image, palette, scale, colours, render, guidelines):
     )
 
     print("Result: %s" % result)
+
+main()
