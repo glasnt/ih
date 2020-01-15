@@ -29,13 +29,14 @@ Options:
 
 Example usage:  
 
-For the [demo image](demo_image.png) ([source](https://picsart.com/i/sticker-pixel-pixelart-pixelated-pixels-llama-rainbow-bow-268615356021211), freetoedit) using the alpaca palette, and scaling the input image x16 smaller, render the result in up to 4 colours
-
 ```
-$ ih -p alpaca -s 16 -r -c 4 demo_image.png
-Result: demo_image.html
+ih -p alpaca -s 16 -r -c 4 demo_image.png
 ```
 
+> For the [demo image](demo_image.png) ([source](https://picsart.com/i/sticker-pixel-pixelart-pixelated-pixels-llama-rainbow-bow-268615356021211), freetoedit) 
+> using the alpaca palette, 
+> and scaling the input image x16 smaller, 
+> render the result in up to 4 colours
 
 Open `demo_image.html` to see the result. 
 
@@ -48,7 +49,7 @@ See [ih-aas](https://github.com/glasnt/ih-aas)
 
 ## Install from source
 
-Using [`git`]( [`virtualenv`](https://virtualenv.pypa.io/en/latest/installation/):
+Using [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [`virtualenv`](https://virtualenv.pypa.io/en/latest/installation/):
 
 ```
 git clone git@github.com:glasnt/ih
