@@ -26,7 +26,10 @@ from ih.chart import *
 @click.option(
     "--guidelines", "-g", is_flag=True, default=False, help="Render guidelines"
 )
-def main(image, palette, scale, colours, render, guidelines):
+@click.option(
+    "--print-ready", is_flag=True, default=False, help="Print-version (black and white)"
+)
+def main(image, palette, scale, colours, render, guidelines, print_ready):
     result = chart(
         image_name=image,
         palette_name=palette,
@@ -34,6 +37,7 @@ def main(image, palette, scale, colours, render, guidelines):
         colours=colours,
         render=render,
         guidelines=guidelines,
+        print_ready=print_ready
     )
 
     print("Result: %s" % result)
