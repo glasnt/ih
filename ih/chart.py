@@ -45,7 +45,9 @@ def chart(
         im, palette=palette, colorlimit=colours, scale=scale, guidelines=guidelines
     )
 
-    chart = generate_chart(chartimage, palette_name, palette, render, guidelines, print_ready)
+    data = debug_data(image_name, palette_name, chartimage)
+
+    chart = generate_chart(chartimage, palette_name, palette, render, guidelines, print_ready, data)
 
     if save:
         saved = save_chart(chart, image_name, fileformat)
@@ -53,6 +55,12 @@ def chart(
     else:
         return chart
 
+def debug_data(image_name, palette_name, chartimage):
+    import pkg_resources
+
+    ih_version = pkg_resources.require("ih")[0].version
+    return (f'<div class="debug">Image: {image_name}, {chartimage.height} x {chartimage.width}. '
+           f'Palette: {palette_name}. ih version {ih_version}</div>')
 
 def preprocess_image(image, palette=None, colorlimit=256, scale=1, guidelines=False):
     palette_image = get_palette_image(palette)
@@ -76,7 +84,7 @@ def preprocess_image(image, palette=None, colorlimit=256, scale=1, guidelines=Fa
     return im._new(_im).convert("RGB")
 
 
-def generate_chart(chartimage, palette_name, palette, render=False, guidelines=False, print_ready=False):
+def generate_chart(chartimage, palette_name, palette, render=False, guidelines=False, print_ready=False,  data=""):
     histogram = sorted(chartimage.getcolors())
 
     html = ['<html><meta charset="UTF-8">']
@@ -164,13 +172,8 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
 
     html.append("</table></div>")
 
-    # Debug
-    import pkg_resources
+    html.append(f'<div class="debug">{data}</div>')
 
-    ih_version = pkg_resources.require("ih")[0].version
-    html.append(
-        f'<div class="debug">Image: {chartimage.height} x {chartimage.width}. ih version {ih_version}</div>'
-    )
     html.append("</div>")  # end left-content
 
     html.append('<div class="right-content"><div class="chart">')
