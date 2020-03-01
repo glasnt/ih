@@ -27,6 +27,7 @@ def chart(
     guidelines=False,
     fileformat="html",
     save=True,
+    print_ready=False,
 ):
     # can't have both guidelines and rendering
     if render:
@@ -44,7 +45,7 @@ def chart(
         im, palette=palette, colorlimit=colours, scale=scale, guidelines=guidelines
     )
 
-    chart = generate_chart(chartimage, palette_name, palette, render, guidelines)
+    chart = generate_chart(chartimage, palette_name, palette, render, guidelines, print_ready)
 
     if save:
         saved = save_chart(chart, image_name, fileformat)
@@ -75,7 +76,7 @@ def preprocess_image(image, palette=None, colorlimit=256, scale=1, guidelines=Fa
     return im._new(_im).convert("RGB")
 
 
-def generate_chart(chartimage, palette_name, palette, render=False, guidelines=False):
+def generate_chart(chartimage, palette_name, palette, render=False, guidelines=False, print_ready=False):
     histogram = sorted(chartimage.getcolors())
 
     html = ['<html><meta charset="UTF-8">']
@@ -115,6 +116,12 @@ def generate_chart(chartimage, palette_name, palette, render=False, guidelines=F
             color = "black"
         else:
             color = "lightgray"
+
+        # force black/white if print_ready
+        if print_ready:
+            color = "black"
+            h = "white"
+
         styles[sclass] = {"bg": h, "c": color, "star": star}
 
         legend[rgb2hex(x[1])] = STARS[idx % len(STARS)]
