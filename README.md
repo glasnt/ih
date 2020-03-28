@@ -59,6 +59,10 @@ source venv/bin/activate
 pip install -r requirements
 ```
 
+## How to cross-stitch
+
+Check out this amazing [Cross Stitch Carpentry](https://sgibson91.github.io/cross-stitch-carpentry/index.html) lesson!
+
 ## Package name origin
 
 Disney's [_Lilo and Stitch_](https://www.youtube.com/watch?v=ItYmxezZ7QA): 
