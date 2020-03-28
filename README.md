@@ -1,8 +1,16 @@
-# ih
+*A very persuasive package, for creating embroidery patterns.*
 
-A very persuasive package, for creating embroidery patterns. 
+`ih` is a Python command-line tool for generating cross-stitch patterns from source images. 
+
+Would you prefer to use a website instead? Try [`ih` as a Service](https://github.com/glasnt/ih-aas)
 
 [As seen at PyCon US 2019](https://us.pycon.org/2019/schedule/presentation/229/)
+
+## How to cross-stitch
+
+Check out this amazing [Cross Stitch Carpentry](https://sgibson91.github.io/cross-stitch-carpentry/index.html) lesson!
+
+# `ih` technical details  
 
 ## Installation
 
@@ -11,6 +19,8 @@ Requires [Python 3.7+](https://www.python.org/downloads/) and [`pip`](https://pi
 ```
 pip install ih
 ```
+
+`ih` is now usable as a CLI. 
 
 ## CLI Usage
 
@@ -43,10 +53,6 @@ Open `demo_image.html` to see the result.
 ![sample render](https://user-images.githubusercontent.com/813732/72396688-68d7f800-3735-11ea-8a86-198931db374b.jpg)
 
 
-## As A Service
-
-See [ih-aas](https://github.com/glasnt/ih-aas)
-
 ## Install from source
 
 Using [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [`virtualenv`](https://virtualenv.pypa.io/en/latest/installation/):
@@ -56,12 +62,12 @@ git clone git@github.com:glasnt/ih
 cd ih
 virtualenv venv
 source venv/bin/activate
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
-## How to cross-stitch
+## `ih` as a module
 
-Check out this amazing [Cross Stitch Carpentry](https://sgibson91.github.io/cross-stitch-carpentry/index.html) lesson!
+See its use in [`ih-aas`](https://github.com/glasnt/ih-aas/blob/master/app.py)
 
 ## Package name origin
 
@@ -82,5 +88,4 @@ LILO & STITCH is a trademark of Disney Enterprises, Inc.
 LEGO® is a registered trademark of The Lego Group. 
 
 PERLER BEADS is a trademark of Stitch Acquisition Group. 
-
 
