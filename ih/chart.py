@@ -235,9 +235,12 @@ def generate_term_chart(chartimage, pal, render, palette_name, data):
         return result
 
 
-    def star(rgb):
+    def star(rgb, render=False):
         p = helpers.rgb2hex(rgb)
-        return c(legend[p], fg=rgb)    
+        if render:
+            return c("  ", bg=rgb)
+        else:
+            return c(legend[p], fg=rgb)    
 
     legend, styles, histogram = get_legend(chartimage, print_ready=False)
 
@@ -250,7 +253,7 @@ def generate_term_chart(chartimage, pal, render, palette_name, data):
         color = helpers.rgb2hex(rgb)
         thread = palette.thread_name(rgb, pal)
         code = thread["code"]
-        symbol = legend[color]
+        symbol = star(rgb, render=render)
         
         table.append([symbol, str(count), code])
 
@@ -261,10 +264,7 @@ def generate_term_chart(chartimage, pal, render, palette_name, data):
         row = []
         for x in range(0, chartimage.width):
             rgb = chartimage.getpixel((x, y))
-            if render:
-                row.append(c("  ", bg=rgb))
-            else:
-                row.append(star(rgb)+ " ")
+            row.append(star(rgb, render=render))
     
         result += "".join(row) + "\n"
     result += data
