@@ -1,44 +1,28 @@
-from ih.chart import *
+import click
+from ih import chart, palette
 
 
 @click.command()
 @click.argument("image")
-@click.option(
-    "--palette",
-    "-p",
-    default=PALETTE_DEFAULT,
-    help=f"Choices: {', '.join(PALETTES)}. Default: {PALETTE_DEFAULT}"
-)
-@click.option("--scale", "-s", default=1, help="Rescale factor. Default: 1")
-@click.option(
-    "--colours",
-    "-c",
-    default=256,
-    help="Limit palette to at most N colors. Default: 256",
-)
-@click.option(
-    "--render",
-    "-r",
-    is_flag=True,
-    default=False,
-    help="Render a preview (using thread images)",
-)
-@click.option(
-    "--guidelines", "-g", is_flag=True, default=False, help="Render guidelines"
-)
-@click.option(
-    "--print-ready", is_flag=True, default=False, help="Print-version (black and white)"
-)
+@click.option("--palette","-p",default=chart.DEFAULT["palette"], show_default=True, type=click.Choice(palette.PALETTES), help="Palette to use")
+@click.option("--scale",  "-s", default=chart.DEFAULT["scale"], show_default=True, help="Rescale factor")
+@click.option("--colors","-c", default=chart.DEFAULT["colors"], show_default=True, help="Limit palette to at most N colors.")
+@click.option("--render", "-r", is_flag=True, default=chart.DEFAULT["render"], show_default=True, 
+help="Render preview of resulting artwork")
+@click.option("--guidelines", "-g", is_flag=True, default=chart.DEFAULT["guidelines"], show_default=True, help="Show guidelines")
+@click.option("--print-ready", is_flag=True, default=chart.DEFAULT["print_ready"], help="Print black and white version")
+@click.option("--fileformat", "-f", type=click.Choice(chart.OUTPUT_FORMAT), default=chart.DEFAULT["fileformat"], show_default=True, help="Output file format")
 @click.version_option()
-def main(image, palette, scale, colours, render, guidelines, print_ready):
-    result = chart(
+def main(image, palette, scale, colors, render, guidelines, print_ready, fileformat):
+    result = chart.chart(
         image_name=image,
         palette_name=palette,
         scale=scale,
-        colours=colours,
+        colors=colors,
         render=render,
         guidelines=guidelines,
-        print_ready=print_ready
+        print_ready=print_ready,
+        fileformat=fileformat
     )
 
     print("Result: %s" % result)
