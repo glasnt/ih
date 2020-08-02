@@ -108,7 +108,7 @@ def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=
             .chart { border: 1px solid black }
             </style>
             """
-                % get_thread_image(palette_name)
+                % palette.get_thread_image(palette_name)
             )
         )
 

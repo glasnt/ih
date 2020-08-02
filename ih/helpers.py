@@ -48,9 +48,9 @@ def color_cell(
     classes = f"s {star_class(star)}"
     if center:
         classes += " center"
-    if guide[0]:
-        classes += " gx"
     if guide[1]:
+        classes += " gx"
+    if guide[0]:
         classes += " gy"
 
     return f'<{td} class="{classes}"></{td}>'
