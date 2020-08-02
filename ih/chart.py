@@ -184,7 +184,7 @@ def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=
             rgb = chartimage.getpixel((x, y))
 
             if rgb == GUIDECOL:
-                row.append(guide_cell([guide_x, guide_y]))
+                row.append(helpers.guide_cell([guide_x, guide_y]))
                 continue
             p = helpers.rgb2hex(rgb)
 
