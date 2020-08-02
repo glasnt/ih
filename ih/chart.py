@@ -240,7 +240,7 @@ def generate_term_chart(chartimage, pal, render, palette_name, data):
         if render:
             return c("  ", bg=rgb)
         else:
-            return c(legend[p], fg=rgb)    
+            return c(legend[p], fg=rgb) + " "   
 
     legend, styles, histogram = get_legend(chartimage, print_ready=False)
 
