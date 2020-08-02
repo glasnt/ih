@@ -12,7 +12,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/glasnt/ih",
-    install_requires=["click", "pillow"],
+    install_requires=["click", "pillow", "tabulate"],
     entry_points={"console_scripts": ["ih = ih.__main__:main"]},
     packages=["ih"],
     include_package_data=True,

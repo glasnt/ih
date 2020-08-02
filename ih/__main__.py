@@ -1,17 +1,62 @@
 import click
+
 from ih import chart, palette
 
 
 @click.command()
 @click.argument("image")
-@click.option("--palette","-p",default=chart.DEFAULT["palette"], show_default=True, type=click.Choice(palette.PALETTES), help="Palette to use")
-@click.option("--scale",  "-s", default=chart.DEFAULT["scale"], show_default=True, help="Rescale factor")
-@click.option("--colors","-c", default=chart.DEFAULT["colors"], show_default=True, help="Limit palette to at most N colors.")
-@click.option("--render", "-r", is_flag=True, default=chart.DEFAULT["render"], show_default=True, 
-help="Render preview of resulting artwork")
-@click.option("--guidelines", "-g", is_flag=True, default=chart.DEFAULT["guidelines"], show_default=True, help="Show guidelines")
-@click.option("--print-ready", is_flag=True, default=chart.DEFAULT["print_ready"], help="Print black and white version")
-@click.option("--fileformat", "-f", type=click.Choice(chart.OUTPUT_FORMAT), default=chart.DEFAULT["fileformat"], show_default=True, help="Output file format")
+@click.option(
+    "--palette",
+    "-p",
+    default=chart.DEFAULT["palette"],
+    show_default=True,
+    type=click.Choice(palette.PALETTES),
+    help="Palette to use",
+)
+@click.option(
+    "--scale",
+    "-s",
+    default=chart.DEFAULT["scale"],
+    show_default=True,
+    help="Rescale factor",
+)
+@click.option(
+    "--colors",
+    "-c",
+    default=chart.DEFAULT["colors"],
+    show_default=True,
+    help="Limit palette to at most N colors.",
+)
+@click.option(
+    "--render",
+    "-r",
+    is_flag=True,
+    default=chart.DEFAULT["render"],
+    show_default=True,
+    help="Render preview of resulting artwork",
+)
+@click.option(
+    "--guidelines",
+    "-g",
+    is_flag=True,
+    default=chart.DEFAULT["guidelines"],
+    show_default=True,
+    help="Show guidelines",
+)
+@click.option(
+    "--print-ready",
+    is_flag=True,
+    default=chart.DEFAULT["print_ready"],
+    help="Print black and white version",
+)
+@click.option(
+    "--fileformat",
+    "-o",
+    type=click.Choice(chart.OUTPUT_FORMAT),
+    default=chart.DEFAULT["fileformat"],
+    show_default=True,
+    help="Output file format",
+)
 @click.version_option()
 def main(image, palette, scale, colors, render, guidelines, print_ready, fileformat):
     result = chart.chart(
@@ -22,7 +67,10 @@ def main(image, palette, scale, colors, render, guidelines, print_ready, filefor
         render=render,
         guidelines=guidelines,
         print_ready=print_ready,
-        fileformat=fileformat
+        fileformat=fileformat,
     )
 
-    print("Result: %s" % result)
+    if fileformat == "html":
+        print("Result: %s" % result)
+    else:
+        return result

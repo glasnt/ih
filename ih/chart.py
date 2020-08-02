@@ -2,6 +2,7 @@ import json
 import click
 from textwrap import dedent
 
+from tabulate import tabulate
 from PIL import Image, ImageOps
 
 from math import ceil, floor
@@ -28,12 +29,16 @@ GUIDE = 10
 # Assuming no colour will be this in our palette.
 GUIDECOL = (0, 0, 0, 0)
 
-def debug_data(image_name, palette_name, chartimage):
+def debug_data(image_name, palette_name, chartimage, fileformat="html"):
     import pkg_resources
 
     ih_version = pkg_resources.require("ih")[0].version
-    return (f'<div class="debug">Image: {image_name}, {chartimage.height} x {chartimage.width}. '
-           f'Palette: {palette_name}. ih version {ih_version}</div>')
+    data = (f'Image: {image_name}, {chartimage.height} x {chartimage.width}. ' +
+            f'Palette: {palette_name}. ih version {ih_version}.')
+    if fileformat=="html": 
+        return f'<div class="debug">{data}</div>'
+    else:
+        return f'\n{data}\n'
 
 def preprocess_image(im, pal=None, colors=DEFAULT["colors"], scale=DEFAULT["scale"], guidelines=DEFAULT["guidelines"]):
     palette_image = palette.get_palette_image(pal)
@@ -80,9 +85,6 @@ def get_legend(chartimage, print_ready=False):
         styles[sclass] = {"bg": h, "rgb": rgb, "c": color, "star": star}
 
         legend[helpers.rgb2hex(x[1])] = STARS[idx % len(STARS)]
-    print(legend)
-    print(styles)
-    print(histogram)
     return legend, styles, histogram
 
 def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=False, print_ready=False,  data=""):
@@ -211,6 +213,64 @@ def save_chart(html, image, fileformat):
 
     return outfile
 
+def generate_term_chart(chartimage, pal, render, palette_name, data):
+
+    def c(text, bg=None, fg=None):
+        def color(rgb, code):
+            if not rgb:
+                return ""
+            R, G, B = rgb
+            return f"\033[{code};2;{R};{G};{B}m"
+
+        def foreground(rgb=None):
+            return color(rgb, "38")
+
+        def background(rgb=None):
+            return color(rgb, "48")
+
+        def reset():
+            return "\033[0;00m"
+
+        result = foreground(fg) + background(bg) + text + reset()
+        return result
+
+
+    def star(rgb):
+        p = helpers.rgb2hex(rgb)
+        return c(legend[p], fg=rgb)    
+
+    legend, styles, histogram = get_legend(chartimage, print_ready=False)
+
+    headers = ["*", palette.get_identity_name(palette_name), f"{palette_name} code"]
+    table = []
+    result = "\n"
+
+    for idx, h in enumerate(reversed(histogram)):
+        count, rgb = h
+        color = helpers.rgb2hex(rgb)
+        thread = palette.thread_name(rgb, pal)
+        code = thread["code"]
+        symbol = legend[color]
+        
+        table.append([symbol, str(count), code])
+
+    result += tabulate(table, headers=headers)
+    result += "\n\n"
+
+    for y in range(0, chartimage.height):
+        row = []
+        for x in range(0, chartimage.width):
+            rgb = chartimage.getpixel((x, y))
+            if render:
+                row.append(c("  ", bg=rgb))
+            else:
+                row.append(star(rgb)+ " ")
+    
+        result += "".join(row) + "\n"
+    result += data
+    return result
+        
+    
 
 def chart(
     image_name=None,
@@ -218,7 +278,7 @@ def chart(
     palette_name=DEFAULT["palette"], #PALETTE_DEFAULT,
     scale=DEFAULT['scale'],
     colors=DEFAULT['colors'],
-    render=DEFAULT['render'], #False,
+    render=DEFAULT['render'],
     guidelines=DEFAULT['guidelines'],
     fileformat=DEFAULT['fileformat'],
     save=DEFAULT['save'],
@@ -240,12 +300,12 @@ def chart(
         im, pal=pal, colors=colors, scale=scale, guidelines=guidelines
     )
 
-    data = debug_data(image_name, palette_name, chartimage)
+    data = debug_data(image_name, palette_name, chartimage, fileformat)
 
     if fileformat == "html":
         chart = generate_html_chart(chartimage, palette_name=palette_name, pal=pal, render=render, guidelines=guidelines, print_ready=print_ready, data=data)
     if fileformat == "term":
-        generate_term_chart(chartimage, **kwargs)
+        chart = generate_term_chart(chartimage, pal=pal, render=render, palette_name=palette_name, data=data)
 
     if save:
         saved = save_chart(chart, image_name, fileformat)
