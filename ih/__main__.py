@@ -29,6 +29,7 @@ from ih.chart import *
 @click.option(
     "--print-ready", is_flag=True, default=False, help="Print-version (black and white)"
 )
+@click.version_option()
 def main(image, palette, scale, colours, render, guidelines, print_ready):
     result = chart(
         image_name=image,
