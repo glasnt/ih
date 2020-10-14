@@ -21,6 +21,8 @@ for p in PALETTES:
     img = base_path("styling").joinpath(f"{p}.png")
     if img.exists():
         THREAD_OVERRIDE[p] = img
+    if "floss" in p:
+        THREAD_OVERRIDE[p] = base_path("styling").joinpath("floss.png")
 
 
 DEFAULT_IDENTITY = "stitches"
