@@ -1,8 +1,9 @@
 # Available palettes
 import csv
 import base64
-from PIL import Image
-from ih.helpers import base_path, hex2rgb
+import scipy.spatial as sp
+from PIL import Image, ImageColor
+from ih.helpers import base_path, hex2rgb, rgb2hex
 
 PALETTES = []
 PALETTE_DIR = base_path("palettes")
@@ -67,6 +68,45 @@ def get_palette(palette_name):
             palette.append({"rgb": rgb, "hex": h, "code": code})
 
     return palette
+
+# This is a stupid hack.
+#
+# Since we are limited to a colour palette of 256, but we might have >256
+# colours to pick from, let's make sure that all the closest colours get
+#
+# To do that, we grab 256 colours from the provided image, and then walk
+# our palette to pick the all the closest colour matches. We then stick those
+# at the front of our palette so they won't be truncated off in
+# get_palette_image below.
+def reduce_palette(palette, image):
+    # No-op if palette is smol
+    if len(palette) <= 256:
+        return palette
+
+    palette_triplets = [x["rgb"] for x in palette]
+    best_colours = set()
+
+    # Get image palette in RGB triplets
+    image_palette = image.getpalette()
+    my_colours = []
+    for i in range (0, len(image_palette), 3):
+        my_colours.append(image_palette[i:i+3])
+
+    # Get nearest colour https://stackoverflow.com/a/22478139
+    tree = sp.KDTree(palette_triplets)
+    for colour in my_colours:
+        _, result = tree.query(colour)
+        best_colours.add(rgb2hex(palette_triplets[result]))
+
+    # Stick best_colours at the front of our palette
+    first_colours = []
+    for item in palette:
+        if item['hex'] in best_colours:
+            first_colours.append(item)
+
+    first_colours += palette
+
+    return first_colours
 
 
 # get a base image that had the palette we want
