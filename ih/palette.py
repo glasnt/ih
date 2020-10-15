@@ -71,10 +71,11 @@ def get_palette(palette_name):
 
     return palette
 
-# This is a stupid hack.
+# This is a fun hack.
 #
 # Since we are limited to a colour palette of 256, but we might have >256
 # colours to pick from, let's make sure that all the closest colours get
+# selected!
 #
 # To do that, we grab 256 colours from the provided image, and then walk
 # our palette to pick the all the closest colour matches. We then stick those
