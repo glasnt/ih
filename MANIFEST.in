@@ -1,2 +1,4 @@
 include ih/palettes/*
 include ih/styling/*
+include versioneer.py
+include ih/_version.py
