@@ -98,6 +98,8 @@ Sourced from the medium colour on swatch previews from DMC.com
 
 **lego**
 
+Source from Kaggle dataset colors.csv https://www.kaggle.com/rtatman/lego-database
+
 **perler**
 
 Based on Perler Manufacturer as listed in:
