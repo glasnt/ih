@@ -35,10 +35,10 @@ table {
   line-height: 30px;
   height: 30px;
   width: 30px;
-  border-right: 1px solid lightgrey;
+  border-right: 1px solid var(--border);
 }
 
-.r  { border-bottom: 1px solid lightgrey; }
+.r  { border-bottom: 1px solid var(--border); }
 .gx { border-bottom: 1px solid black; }
 .gy { border-right: 1px solid black; }
 

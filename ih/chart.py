@@ -93,7 +93,12 @@ def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=
     html = ['<html><meta charset="UTF-8">']
 
     with open(helpers.base_path("styling").joinpath("styling.css")) as s:
-        html.append("<style>" + "".join(s.readlines()) + "</style>")
+        html.append("<style>")
+        if guidelines: 
+            html.append(":root { --border: lightgrey; }")
+        else:
+            html.append(":root { --border: black; }")
+        html.append("".join(s.readlines()) + "</style>")
 
     if render:
         html.append(
