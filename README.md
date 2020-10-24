@@ -79,6 +79,38 @@ Disney's [_Lilo and Stitch_](https://www.youtube.com/watch?v=ItYmxezZ7QA):
 > Pleakley: Fine? You're doing what he says?<br>
 > Jumba: Uh, he's very persuasive.
 
+## Data provenance
+
+
+**floss** 
+
+Sourced from http://www.damaniel.info/dmc/dmctorgb.html and http://threadcolors.com/
+
+**floss-dmc**
+
+Sourced from the medium colour on swatch previews from DMC.com
+
+*Oct 2020: This is the palette dervived during the PyCon 2019 talk, but was replaced with a better palette. It still remains available through floss-dmc*
+
+**wool**
+
+Sourced from the medium colour on swatch previews from DMC.com
+
+**lego**
+
+Source from Kaggle dataset colors.csv https://www.kaggle.com/rtatman/lego-database
+
+**perler**
+
+Based on Perler Manufacturer as listed in:
+
+  * https://www.reddit.com/r/beadsprites/comments/291495/bead_list_with_rgb_values/
+  * https://docs.google.com/spreadsheets/d/1f988o68HDvk335xXllJD16vxLBuRcmm3vg6U9lVaYpA/edit#gid=0
+
+
+**alpaca**
+
+Source from Jill Rowling http://speleonics.com.au/jills/shared/alpaca.json
 
 
 ## Attributions

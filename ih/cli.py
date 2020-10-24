@@ -11,7 +11,7 @@ from ih import chart, palette
     default=chart.DEFAULT["palette"],
     show_default=True,
     type=click.Choice(palette.PALETTES),
-    help="Palette to use",
+    help="Palette to use. See README.md for provenance",
 )
 @click.option(
     "--scale",
