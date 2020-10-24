@@ -17,6 +17,7 @@ table {
 
 .legend td, .chart td {
   vertical-align: middle;
+  border: 1px solid black !important;
   text-align: center;
   height: 30px;
   width: 30px;
@@ -34,12 +35,12 @@ table {
   line-height: 30px;
   height: 30px;
   width: 30px;
-  border-right: 1px solid black;
+  border-right: 1px solid lightgrey;
 }
 
-.r  { border-bottom: 1px solid black; }
-.gx { border-bottom: 1px dashed black; }
-.gy { border-right: 1px dashed black }
+.r  { border-bottom: 1px solid lightgrey; }
+.gx { border-bottom: 1px solid black; }
+.gy { border-right: 1px solid black; }
 
 .center {
   box-shadow: inset 0px 0px 0px 4px #f00;
