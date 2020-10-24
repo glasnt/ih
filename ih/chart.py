@@ -159,7 +159,8 @@ def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=
     html.append("</div>")  # end left-content
 
     html.append('<div class="right-content"><div class="chart">')
-
+    
+    # If using guidelines, expand the image to a whole number of guidelines first. 
     if guidelines:
         chartimage = chartimage.convert("RGBA")
         xpad = GUIDE - (chartimage.width % GUIDE)
@@ -169,6 +170,7 @@ def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=
 
         chartimage = ImageOps.expand(chartimage, padding, fill=GUIDECOL)
 
+    # Generate Chart (TODO(glasnt): make this less terrible)
     CENTER = True
     for y in range(0, chartimage.height):
 
