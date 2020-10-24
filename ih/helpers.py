@@ -27,9 +27,9 @@ def hex2rgb(h):
 
 def guide_cell(guide):
     classes = "s"
-    if guide[0]:
-        classes += " gx"
     if guide[1]:
+        classes += " gx"
+    if guide[0]:
         classes += " gy"
     return f'<div class="{classes}">&nbsp;</div>'
 
