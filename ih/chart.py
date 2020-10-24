@@ -41,7 +41,8 @@ def debug_data(image_name, palette_name, chartimage, fileformat="html"):
         return f'\n{data}\n'
 
 def preprocess_image(im, pal=None, colors=DEFAULT["colors"], scale=DEFAULT["scale"], guidelines=DEFAULT["guidelines"]):
-    palette_image = palette.get_palette_image(pal)
+    reduced_palette = palette.reduce_palette(pal, im)  # cap palette size at 256
+    palette_image = palette.get_palette_image(reduced_palette)
     im = im.resize((int(im.width / scale), int(im.height / scale)))
 
     # Remove black transparency issues with this one weird trick. 
