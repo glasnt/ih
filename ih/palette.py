@@ -90,7 +90,8 @@ def reduce_palette(palette, image):
     best_colours = set()
 
     # Get image palette in RGB triplets
-    image_palette = image.getpalette()
+    im = image.convert("P", palette=Image.ADAPTIVE, colors=256)
+    image_palette = im.getpalette()
     my_colours = []
     for i in range (0, len(image_palette), 3):
         my_colours.append(image_palette[i:i+3])
