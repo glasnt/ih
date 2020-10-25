@@ -10,7 +10,7 @@ TEST_HTML = TEST_IMAGE.split(".")[0] + ".html"
 def runner(args, output=TEST_HTML, print_output=False):
     runner = CliRunner()
     result = runner.invoke(main, [TEST_IMAGE] + args)
-    if print_output: 
+    if print_output:
         print(result.output)
     assert result.exit_code == 0
     assert output in result.output
@@ -33,8 +33,21 @@ def test_guidelines():
     runner(["-g"])
 
 
+def test_thread():
+    runner(["-p", "🧵"])
+
+
+def test_alpaca():
+    runner(["-p", "🦙"])
+
+
+def test_wool():
+    runner(["-p", "🧶"])
+
+
 def test_term():
     runner(["-o", "term"], output="ih version")
+
 
 def test_term_render():
     runner(["-o", "term", "-r"], output="ih version", print_output=True)

@@ -54,7 +54,7 @@ def get_thread_image(palette_name):
 
 def get_palette(palette_name):
     if palette_name in PALETTE_OVERRIDE.keys():
-        palette = PALETTE_OVERRIDE[palette_name]
+        palette_name = PALETTE_OVERRIDE[palette_name]
 
     if palette_name not in PALETTES:
         raise ValueError(

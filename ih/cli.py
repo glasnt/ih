@@ -10,7 +10,7 @@ from ih import chart, palette
     "-p",
     default=chart.DEFAULT["palette"],
     show_default=True,
-    type=click.Choice(palette.PALETTES),
+    type=click.Choice(palette.PALETTES + list(palette.PALETTE_OVERRIDE.keys())),
     help="Palette to use. See README.md for provenance",
 )
 @click.option(
