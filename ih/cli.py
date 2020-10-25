@@ -66,4 +66,4 @@ def main(image, palette, scale, colors, render, guidelines, fileformat):
     if fileformat == "html":
         print("Result: %s" % result)
     else:
-        return result
+        print(result)

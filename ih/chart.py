@@ -16,7 +16,6 @@ DEFAULT = {
     "render": False,
     "guidelines": False,
     "fileformat": "html",
-    "save": True,
     "output_format": "html",
 }
 
@@ -319,7 +318,6 @@ def chart(
     render=DEFAULT["render"],
     guidelines=DEFAULT["guidelines"],
     fileformat=DEFAULT["fileformat"],
-    save=DEFAULT["save"],
 ):
     # can't have both guidelines and rendering
     if render:
@@ -354,13 +352,10 @@ def chart(
             guidelines=guidelines,
             data=data,
         )
-    if fileformat == "term":
+        saved = save_chart(chart, image_name, fileformat)
+        return saved
+    elif fileformat == "term":
         chart = generate_term_chart(
             chartimage, pal=pal, render=render, palette_name=palette_name, data=data
         )
-
-    if save:
-        saved = save_chart(chart, image_name, fileformat)
-        return saved
-    else:
         return chart
