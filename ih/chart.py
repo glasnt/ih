@@ -29,14 +29,17 @@ GUIDE = 10
 # Assuming no colour will be this in our palette.
 GUIDECOL = (0, 0, 0, 0)
 
-def debug_data(image_name, palette_name, chartimage, fileformat="html"):
+def debug_data(image_name, scale, palette_name, chartimage, fileformat="html"):
     import pkg_resources
 
     ih_version = pkg_resources.require("ih")[0].version
-    data = (f'Image: {image_name}, {chartimage.height} x {chartimage.width}. ' +
-            f'Palette: {palette_name}. ih version {ih_version}.')
+    data = [f'Image: {image_name}',
+            f'Scale: {scale}x',
+            f'Image size: {chartimage.height} x {chartimage.width}',
+            f'Palette: {palette_name}',
+            f'ih version: {ih_version}']
     if fileformat=="html": 
-        return f'<div class="debug">{data}</div>'
+        return f'<div class="debug">' + "<br>".join(data) + '</div>'
     else:
         return f'\n{data}\n'
 
@@ -314,7 +317,7 @@ def chart(
         im, pal=pal, colors=colors, scale=scale, guidelines=guidelines
     )
 
-    data = debug_data(image_name, palette_name, chartimage, fileformat)
+    data = debug_data(image_name=image_name, scale=scale, palette_name=palette_name, chartimage=chartimage, fileformat=fileformat)
 
     if fileformat == "html":
         chart = generate_html_chart(chartimage, palette_name=palette_name, pal=pal, render=render, guidelines=guidelines, print_ready=print_ready, data=data)
