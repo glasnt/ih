@@ -42,25 +42,26 @@ def debug_data(image_name, scale, palette_name, chartimage, fileformat="html"):
     if fileformat == "html":
         return f'<div class="debug">' + "<br>".join(data) + "</div>"
     else:
-        return f"\n{data}\n"
+        return "\n".join(data)
 
 
 def preprocess_image(
     im,
-    pal=None,
+    pal,
     colors=DEFAULT["colors"],
     scale=DEFAULT["scale"],
     guidelines=DEFAULT["guidelines"],
 ):
-    reduced_palette = palette.reduce_palette(pal, im)  # cap palette size at 256
-    palette_image = palette.get_palette_image(reduced_palette)
-    im = im.resize((int(im.width / scale), int(im.height / scale)))
-
     # Remove black transparency issues with this one weird trick.
     alpha = im.convert("RGBA").split()[-1]
     bg = Image.new("RGBA", im.size, (255, 255, 255, 255))
     bg.paste(im, mask=alpha)
     im = bg
+
+    # Reduce palette
+    reduced_palette = palette.reduce_palette(palette=pal, image=im)  # cap palette size at 256
+    palette_image = palette.get_palette_image(reduced_palette)
+    im = im.resize((int(im.width / scale), int(im.height / scale)))
 
     im = (
         im.convert("RGB")

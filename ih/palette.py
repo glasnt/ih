@@ -87,15 +87,12 @@ def reduce_palette(palette, image):
     if len(palette) <= 256:
         return palette
 
+    print("Evaluating best colour selection...")
     palette_triplets = [x["rgb"] for x in palette]
     best_colours = set()
 
     # Get image palette in RGB triplets
-    image_palette = image.getpalette()
-    my_colours = []
-    for i in range(0, len(image_palette), 3):
-        my_colours.append(image_palette[i : i + 3])
-
+    my_colours = [x[0:3] for x in image.getdata()]
     # Get nearest colour https://stackoverflow.com/a/22478139
     tree = sp.KDTree(palette_triplets)
     for colour in my_colours:
@@ -110,6 +107,7 @@ def reduce_palette(palette, image):
 
     first_colours += palette
 
+    print("...Done")
     return first_colours
 
 
