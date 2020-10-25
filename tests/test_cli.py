@@ -2,22 +2,24 @@ from click.testing import CliRunner
 from ih.cli import main
 
 
-def test_image():
+TEST_IMAGE = "test_image.png"
+TEST_HTML = TEST_IMAGE.split(".")[0] + ".html"
+
+
+def runner(args):
     runner = CliRunner()
-    result = runner.invoke(main, ["test_image.png"])
+    result = runner.invoke(main, [TEST_IMAGE] + args)
     assert result.exit_code == 0
-    assert result.output == "Result: test_image.html\n"
+    assert result.output == f"Result: {TEST_HTML}\n"
+
+
+def test_image():
+    runner([])
 
 
 def test_render():
-    runner = CliRunner()
-    result = runner.invoke(main, ["test_image.png", "-r"])
-    assert result.exit_code == 0
-    assert result.output == "Result: test_image.html\n"
+    runner(["-r"])
 
 
 def test_guidelines():
-    runner = CliRunner()
-    result = runner.invoke(main, ["test_image.png", "-g"])
-    assert result.exit_code == 0
-    assert result.output == "Result: test_image.html\n"
+    runner(["-g"])
