@@ -160,8 +160,14 @@ def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=
     html.append("</table></div>")
 
     html.append(f'<div class="debug">{data}</div>')
+    
+    # If using guidelines, enable printhacks
+    if guidelines: 
+        with open(helpers.base_path("styling").joinpath("styling.html")) as s:
+            html.append("".join(s.readlines()))
 
     html.append("</div>")  # end left-content
+    html.append("<div class='page-break'></div>")  # force page break
 
     html.append('<div class="right-content"><div class="chart">')
     
