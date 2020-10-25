@@ -15,7 +15,6 @@ DEFAULT = {
     "colors": 256,
     "render": False,
     "guidelines": False,
-    "print_ready": False,
     "fileformat": "html",
     "save": True,
     "output_format": "html",
@@ -75,7 +74,7 @@ def preprocess_image(
     return im._new(_im).convert("RGB")
 
 
-def get_legend(chartimage, print_ready=False):
+def get_legend(chartimage):
     legend = {}
     styles = {}
     histogram = sorted(chartimage.getcolors())
@@ -92,11 +91,6 @@ def get_legend(chartimage, print_ready=False):
         else:
             color = "lightgray"
 
-        # force black/white if print_ready
-        if print_ready:
-            color = "black"
-            h = "white"
-
         styles[sclass] = {"bg": h, "rgb": rgb, "c": color, "star": star}
 
         legend[helpers.rgb2hex(x[1])] = STARS[idx % len(STARS)]
@@ -109,7 +103,6 @@ def generate_html_chart(
     pal,
     render=False,
     guidelines=False,
-    print_ready=False,
     data="",
 ):
 
@@ -141,7 +134,7 @@ def generate_html_chart(
             )
         )
 
-    legend, styles, histogram = get_legend(chartimage, print_ready)
+    legend, styles, histogram = get_legend(chartimage)
     after = {}
 
     html.append("<style>")
@@ -288,7 +281,7 @@ def generate_term_chart(chartimage, pal, render, palette_name, data):
         else:
             return c(legend[p], fg=rgb) + " "
 
-    legend, styles, histogram = get_legend(chartimage, print_ready=False)
+    legend, styles, histogram = get_legend(chartimage)
 
     headers = ["*", palette.get_identity_name(palette_name), f"{palette_name} code"]
     table = []
@@ -327,7 +320,6 @@ def chart(
     guidelines=DEFAULT["guidelines"],
     fileformat=DEFAULT["fileformat"],
     save=DEFAULT["save"],
-    print_ready=DEFAULT["print_ready"],
 ):
     # can't have both guidelines and rendering
     if render:
@@ -360,7 +352,6 @@ def chart(
             pal=pal,
             render=render,
             guidelines=guidelines,
-            print_ready=print_ready,
             data=data,
         )
     if fileformat == "term":

@@ -36,18 +36,12 @@ from ih import chart, palette
     help="Render preview of resulting artwork",
 )
 @click.option(
-    "--guidelines",
+    "--guidelines", "--print-ready",
     "-g",
     is_flag=True,
     default=chart.DEFAULT["guidelines"],
     show_default=True,
-    help="Show guidelines. Recommended for printing.",
-)
-@click.option(
-    "--print-ready",
-    is_flag=True,
-    default=chart.DEFAULT["print_ready"],
-    help="Print black and white version",
+    help="Show guidelines, and print without colour",
 )
 @click.option(
     "--fileformat",
@@ -58,7 +52,7 @@ from ih import chart, palette
     help="Output file format",
 )
 @click.version_option()
-def main(image, palette, scale, colors, render, guidelines, print_ready, fileformat):
+def main(image, palette, scale, colors, render, guidelines, fileformat):
     result = chart.chart(
         image_name=image,
         palette_name=palette,
@@ -66,7 +60,6 @@ def main(image, palette, scale, colors, render, guidelines, print_ready, filefor
         colors=colors,
         render=render,
         guidelines=guidelines,
-        print_ready=print_ready,
         fileformat=fileformat,
     )
 
