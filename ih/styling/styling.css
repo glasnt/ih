@@ -17,6 +17,7 @@ table {
 
 .legend td, .chart td {
   vertical-align: middle;
+  border: 1px solid black !important;
   text-align: center;
   height: 30px;
   width: 30px;
@@ -34,12 +35,12 @@ table {
   line-height: 30px;
   height: 30px;
   width: 30px;
-  border-right: 1px solid black;
+  border-right: 1px solid var(--border);
 }
 
-.r  { border-bottom: 1px solid black; }
-.gx { border-bottom: 1px dashed black; }
-.gy { border-right: 1px dashed black }
+.r  { border-bottom: 1px solid var(--border); }
+.gx { border-bottom: 1px solid black; }
+.gy { border-right: 1px solid black; }
 
 .center {
   box-shadow: inset 0px 0px 0px 4px #f00;
@@ -55,10 +56,27 @@ table {
   display: block
 }
 .chart {
-  display: inline-block;
+  display: inline-table;
+  page-break-inside:auto;
   border-left: 1px solid black;
   border-top: 1px solid black;
 }
 .legend .label  { padding: 0 10 0 10; }
 td { border: 1px solid black; }
+.interactive { margin: 20px }
+
+@page { 
+} 
+@media print {
+    .page-break { 
+      display:block;
+      page-break-after: always;
+    } 
+    
+    /* make chart black and white for printing */
+    .s { background-color: white !important; color: black !important; }
+    .interactive { display: none }
+    .page-header { align-content: center }
+    .center { box-shadow: inset 0px 0px 0px 4px #000 }
+}
 

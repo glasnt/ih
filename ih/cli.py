@@ -41,7 +41,7 @@ from ih import chart, palette
     is_flag=True,
     default=chart.DEFAULT["guidelines"],
     show_default=True,
-    help="Show guidelines",
+    help="Show guidelines. Recommended for printing.",
 )
 @click.option(
     "--print-ready",

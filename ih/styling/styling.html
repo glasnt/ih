@@ -1,0 +1,39 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<div class="interactive">
+<input type="button" id="print-button" value="Print page"/><small> (processing may take a few seconds)</small>
+</div>
+<script>
+    /*
+     * HTML: Print Wide HTML Tables
+     * https://salman-w.blogspot.com/2013/04/printing-wide-html-tables.html
+     */
+    $(function() {
+        $("#print-button").on("click", function() {
+            var table = $(".chart"),
+                tableWidth = table.outerWidth(),
+                pageWidth = 31 * 30, // (GRID + 1) * 3 * GUIDE 
+                pageCount = Math.ceil(tableWidth / pageWidth), 
+                printWrap = $("<div></div>").insertAfter(table),
+                i,
+                printPage;
+            for (i = 0; i < pageCount; i++) {
+                printPage = $("<div><div class='page-header'>column "+(i + 1)+"</div>").css({
+                    "overflow": "hidden",
+                    "width": pageWidth + 1,
+                    "page-break-before": i === 0 ? "auto" : "always"
+                }).appendTo(printWrap);
+                table.clone().removeAttr("id").appendTo(printPage).css({
+                    "position": "relative",
+                    "left": -i * pageWidth
+                });
+            }
+            table.hide();
+            $(this).prop("style", "display: none");
+            window.print();
+            $("#print-link").prop("style", "display:block");
+        });
+    });
+    $(function() {
+        $("#print-link").on("click", function() { window.print(); });
+    });
+</script>

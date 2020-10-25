@@ -71,6 +71,7 @@ def get_palette(palette_name):
 
     return palette
 
+
 # This is a fun hack.
 #
 # Since we are limited to a colour palette of 256, but we might have >256
@@ -92,8 +93,8 @@ def reduce_palette(palette, image):
     # Get image palette in RGB triplets
     image_palette = image.getpalette()
     my_colours = []
-    for i in range (0, len(image_palette), 3):
-        my_colours.append(image_palette[i:i+3])
+    for i in range(0, len(image_palette), 3):
+        my_colours.append(image_palette[i : i + 3])
 
     # Get nearest colour https://stackoverflow.com/a/22478139
     tree = sp.KDTree(palette_triplets)
@@ -104,7 +105,7 @@ def reduce_palette(palette, image):
     # Stick best_colours at the front of our palette
     first_colours = []
     for item in palette:
-        if item['hex'] in best_colours:
+        if item["hex"] in best_colours:
             first_colours.append(item)
 
     first_colours += palette
@@ -127,7 +128,7 @@ def get_palette_image(palette):
         sum([x["rgb"] for x in palette], [])
         + (palette[-1]["rgb"] * (256 - len(palette)))
     )[: 256 * 3]
-    image = Image.new("P", (1,1))
+    image = Image.new("P", (1, 1))
     image.putpalette(data)
 
     return image

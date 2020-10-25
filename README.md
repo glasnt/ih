@@ -28,13 +28,24 @@ pip install ih
 Usage: ih [OPTIONS] IMAGE
 
 Options:
-  -p, --palette TEXT     Choices: lego, floss, perler, alpaca, wool. Default:
-                         wool
-  -s, --scale INTEGER    Rescale factor. Default: 1
-  -c, --colours INTEGER  Limit palette to at most N colors. Default: 256
-  -r, --render           Render a preview (using thread images)
-  -g, --guidelines       Render guidelines
-  --help                 Show this message and exit.
+  -p, --palette [lego|floss|floss-dmc|perler|alpaca|wool]
+                                  Palette to use. See README.md for provenance
+                                  [default: wool]
+
+  -s, --scale INTEGER             Rescale factor  [default: 1]
+  -c, --colors INTEGER            Limit palette to at most N colors.
+                                  [default: 256]
+
+  -r, --render                    Render preview of resulting artwork
+                                  [default: False]
+
+  -g, --guidelines                Show guidelines. Recommended for printing.
+                                  [default: False]
+
+  --print-ready                   Print black and white version
+  -o, --fileformat [html|term]    Output file format  [default: html]
+  --version                       Show the version and exit.
+  --help                          Show this message and exit.
 ```
 
 Example usage:  
@@ -53,6 +64,15 @@ Open `demo_image.html` to see the result.
 ![sample render](https://user-images.githubusercontent.com/813732/72396688-68d7f800-3735-11ea-8a86-198931db374b.jpg)
 
 
+### Printing
+
+Use `-g` for printing. `ih` will: 
+ 
+ * Use print-css functionality to ensure the print view is black+white
+ * Use js to dynamically split wide charts. *Requires* jQuery via CDN. 
+
+When printing, the page order will be legend, then a series of columns of chart.
+ 
 ## Install from source
 
 Using [`git`](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [`virtualenv`](https://virtualenv.pypa.io/en/latest/installation/):
