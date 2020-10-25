@@ -9,7 +9,6 @@ TEST_HTML = TEST_IMAGE.split(".")[0] + ".html"
 def runner(args):
     runner = CliRunner()
     result = runner.invoke(main, [TEST_IMAGE] + args)
-    print(result.output)
     assert result.exit_code == 0
     assert result.output == f"Result: {TEST_HTML}\n"
 
