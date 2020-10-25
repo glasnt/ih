@@ -12,14 +12,14 @@ from ih import palette, helpers
 DEFAULT = {
     "palette": palette.PALETTE_DEFAULT,
     "scale": 1,
-    "colors": 256, 
+    "colors": 256,
     "render": False,
     "guidelines": False,
     "print_ready": False,
-    "fileformat": "html", 
+    "fileformat": "html",
     "save": True,
-    "output_format": "html"
-    }
+    "output_format": "html",
+}
 
 OUTPUT_FORMAT = ["html", "term"]
 
@@ -29,26 +29,36 @@ GUIDE = 10
 # Assuming no colour will be this in our palette.
 GUIDECOL = (0, 0, 0, 0)
 
+
 def debug_data(image_name, scale, palette_name, chartimage, fileformat="html"):
     import pkg_resources
 
     ih_version = pkg_resources.require("ih")[0].version
-    data = [f'Image: {image_name}',
-            f'Scale: {scale}x',
-            f'Image size: {chartimage.height} x {chartimage.width}',
-            f'Palette: {palette_name}',
-            f'ih version: {ih_version}']
-    if fileformat=="html": 
-        return f'<div class="debug">' + "<br>".join(data) + '</div>'
+    data = [
+        f"Image: {image_name}",
+        f"Scale: {scale}x",
+        f"Image size: {chartimage.height} x {chartimage.width}",
+        f"Palette: {palette_name}",
+        f"ih version: {ih_version}",
+    ]
+    if fileformat == "html":
+        return f'<div class="debug">' + "<br>".join(data) + "</div>"
     else:
-        return f'\n{data}\n'
+        return f"\n{data}\n"
 
-def preprocess_image(im, pal=None, colors=DEFAULT["colors"], scale=DEFAULT["scale"], guidelines=DEFAULT["guidelines"]):
+
+def preprocess_image(
+    im,
+    pal=None,
+    colors=DEFAULT["colors"],
+    scale=DEFAULT["scale"],
+    guidelines=DEFAULT["guidelines"],
+):
     reduced_palette = palette.reduce_palette(pal, im)  # cap palette size at 256
     palette_image = palette.get_palette_image(reduced_palette)
     im = im.resize((int(im.width / scale), int(im.height / scale)))
 
-    # Remove black transparency issues with this one weird trick. 
+    # Remove black transparency issues with this one weird trick.
     alpha = im.convert("RGBA").split()[-1]
     bg = Image.new("RGBA", im.size, (255, 255, 255, 255))
     bg.paste(im, mask=alpha)
@@ -64,7 +74,8 @@ def preprocess_image(im, pal=None, colors=DEFAULT["colors"], scale=DEFAULT["scal
 
     return im._new(_im).convert("RGB")
 
-def get_legend(chartimage, print_ready=False): 
+
+def get_legend(chartimage, print_ready=False):
     legend = {}
     styles = {}
     histogram = sorted(chartimage.getcolors())
@@ -91,13 +102,22 @@ def get_legend(chartimage, print_ready=False):
         legend[helpers.rgb2hex(x[1])] = STARS[idx % len(STARS)]
     return legend, styles, histogram
 
-def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=False, print_ready=False,  data=""):
+
+def generate_html_chart(
+    chartimage,
+    palette_name,
+    pal,
+    render=False,
+    guidelines=False,
+    print_ready=False,
+    data="",
+):
 
     html = ['<html><meta charset="UTF-8">']
 
     with open(helpers.base_path("styling").joinpath("styling.css")) as s:
         html.append("<style>")
-        if guidelines: 
+        if guidelines:
             html.append(":root { --border: lightgrey; }")
         else:
             html.append(":root { --border: black; }")
@@ -133,7 +153,10 @@ def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=
             html.append('.%s::after { content: "%s" }' % (x, y["star"]))
 
     if not render:
-        html.append('.%s::after { content: "%s" }' % (helpers.star_class(helpers.WHITESTAR), helpers.WHITESTAR))
+        html.append(
+            '.%s::after { content: "%s" }'
+            % (helpers.star_class(helpers.WHITESTAR), helpers.WHITESTAR)
+        )
 
     html.append("</style>")
 
@@ -156,16 +179,18 @@ def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=
 
         html.append(
             "<tr>"
-            + helpers.color_cell(color=color, star=legend[color], thread=False, legend=True)
+            + helpers.color_cell(
+                color=color, star=legend[color], thread=False, legend=True
+            )
             + "<td>{}</td><td>{}</td></tr>".format(count, code)
         )
 
     html.append("</table></div>")
 
     html.append(f'<div class="debug">{data}</div>')
-    
+
     # If using guidelines, enable printhacks
-    if guidelines: 
+    if guidelines:
         with open(helpers.base_path("styling").joinpath("styling.html")) as s:
             html.append("".join(s.readlines()))
 
@@ -173,8 +198,8 @@ def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=
     html.append("<div class='page-break'></div>")  # force page break
 
     html.append('<div class="right-content"><div class="chart">')
-    
-    # If using guidelines, expand the image to a whole number of guidelines first. 
+
+    # If using guidelines, expand the image to a whole number of guidelines first.
     if guidelines:
         chartimage = chartimage.convert("RGBA")
         xpad = GUIDE - (chartimage.width % GUIDE)
@@ -213,7 +238,12 @@ def generate_html_chart(chartimage, palette_name, pal, render=False, guidelines=
                         CENTER = False
 
             row.append(
-                helpers.color_cell(color=p, star=legend[p], center=center_flag, guide=[guide_x, guide_y])
+                helpers.color_cell(
+                    color=p,
+                    star=legend[p],
+                    center=center_flag,
+                    guide=[guide_x, guide_y],
+                )
             )
 
         html.append("<div class='r'>" + "".join(row) + "</div>")
@@ -230,8 +260,8 @@ def save_chart(html, image, fileformat):
 
     return outfile
 
-def generate_term_chart(chartimage, pal, render, palette_name, data):
 
+def generate_term_chart(chartimage, pal, render, palette_name, data):
     def c(text, bg=None, fg=None):
         def color(rgb, code):
             if not rgb:
@@ -251,13 +281,12 @@ def generate_term_chart(chartimage, pal, render, palette_name, data):
         result = foreground(fg) + background(bg) + text + reset()
         return result
 
-
     def star(rgb, render=False):
         p = helpers.rgb2hex(rgb)
         if render:
             return c("  ", bg=rgb)
         else:
-            return c(legend[p], fg=rgb) + " "   
+            return c(legend[p], fg=rgb) + " "
 
     legend, styles, histogram = get_legend(chartimage, print_ready=False)
 
@@ -271,7 +300,7 @@ def generate_term_chart(chartimage, pal, render, palette_name, data):
         thread = palette.thread_name(rgb, pal)
         code = thread["code"]
         symbol = star(rgb, render=render)
-        
+
         table.append([symbol, str(count), code])
 
     result += tabulate(table, headers=headers)
@@ -282,24 +311,23 @@ def generate_term_chart(chartimage, pal, render, palette_name, data):
         for x in range(0, chartimage.width):
             rgb = chartimage.getpixel((x, y))
             row.append(star(rgb, render=render))
-    
+
         result += "".join(row) + "\n"
     result += data
     return result
-        
-    
+
 
 def chart(
     image_name=None,
     image_obj=None,
-    palette_name=DEFAULT["palette"], #PALETTE_DEFAULT,
-    scale=DEFAULT['scale'],
-    colors=DEFAULT['colors'],
-    render=DEFAULT['render'],
-    guidelines=DEFAULT['guidelines'],
-    fileformat=DEFAULT['fileformat'],
-    save=DEFAULT['save'],
-    print_ready=DEFAULT['print_ready'],
+    palette_name=DEFAULT["palette"],  # PALETTE_DEFAULT,
+    scale=DEFAULT["scale"],
+    colors=DEFAULT["colors"],
+    render=DEFAULT["render"],
+    guidelines=DEFAULT["guidelines"],
+    fileformat=DEFAULT["fileformat"],
+    save=DEFAULT["save"],
+    print_ready=DEFAULT["print_ready"],
 ):
     # can't have both guidelines and rendering
     if render:
@@ -317,12 +345,28 @@ def chart(
         im, pal=pal, colors=colors, scale=scale, guidelines=guidelines
     )
 
-    data = debug_data(image_name=image_name, scale=scale, palette_name=palette_name, chartimage=chartimage, fileformat=fileformat)
+    data = debug_data(
+        image_name=image_name,
+        scale=scale,
+        palette_name=palette_name,
+        chartimage=chartimage,
+        fileformat=fileformat,
+    )
 
     if fileformat == "html":
-        chart = generate_html_chart(chartimage, palette_name=palette_name, pal=pal, render=render, guidelines=guidelines, print_ready=print_ready, data=data)
+        chart = generate_html_chart(
+            chartimage,
+            palette_name=palette_name,
+            pal=pal,
+            render=render,
+            guidelines=guidelines,
+            print_ready=print_ready,
+            data=data,
+        )
     if fileformat == "term":
-        chart = generate_term_chart(chartimage, pal=pal, render=render, palette_name=palette_name, data=data)
+        chart = generate_term_chart(
+            chartimage, pal=pal, render=render, palette_name=palette_name, data=data
+        )
 
     if save:
         saved = save_chart(chart, image_name, fileformat)
