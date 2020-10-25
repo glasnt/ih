@@ -28,7 +28,7 @@ GUIDE = 10
 GUIDECOL = (0, 0, 0, 0)
 
 
-def debug_data(image_name, scale, palette_name, chartimage, fileformat="html"):
+def debug_data(image_name, scale, colors, palette_name, chartimage, fileformat="html"):
     import pkg_resources
 
     ih_version = pkg_resources.require("ih")[0].version
@@ -37,6 +37,7 @@ def debug_data(image_name, scale, palette_name, chartimage, fileformat="html"):
         f"Scale: {scale}x",
         f"Image size: {chartimage.height} x {chartimage.width}",
         f"Palette: {palette_name}",
+        f"Colors: {colors}",
         f"ih version: {ih_version}",
     ]
     if fileformat == "html":
@@ -339,6 +340,7 @@ def chart(
     data = debug_data(
         image_name=image_name,
         scale=scale,
+        colors=colors,
         palette_name=palette_name,
         chartimage=chartimage,
         fileformat=fileformat,
