@@ -306,7 +306,7 @@ def generate_term_chart(chartimage, pal, render, palette_name, data):
             row.append(star(rgb, render=render))
 
         result += "".join(row) + "\n"
-    result += data
+    result += "\n" + data
     return result
 
 
