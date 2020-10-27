@@ -112,6 +112,15 @@ Sourced from the medium colour on swatch previews from DMC.com
 
 *Oct 2020: This is the palette dervived during the PyCon 2019 talk, but was replaced with a better palette. It still remains available through floss-dmc*
 
+**floss-pdx**
+
+Yet another floss-to-hex palette offered by http://pdxstitch.net/tools/tools.html
+and converted to ih format. The original spreadsheet can be found
+[here](https://docs.google.com/spreadsheets/u/1/d/14PuY3CbQZcYOYtuMn7446TUBh4h4M5wlI0yx1GWG1XY/preview?usp=sharing#gid=0).
+
+Note that they also provide a couple of other handy tools including a floss use
+calculator!
+
 **wool**
 
 Sourced from the medium colour on swatch previews from DMC.com
