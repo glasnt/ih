@@ -141,3 +141,4 @@ LEGO® is a registered trademark of The Lego Group.
 
 PERLER BEADS is a trademark of Stitch Acquisition Group. 
 
+Aurora test image (`test_image.jpg`) by Jonathan Bean from Unsplash: https://unsplash.com/photos/Ejpx_sdKEKo

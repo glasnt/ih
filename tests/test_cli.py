@@ -7,9 +7,9 @@ TEST_IMAGE = "test_image.png"
 TEST_HTML = TEST_IMAGE.split(".")[0] + ".html"
 
 
-def runner(args, output=TEST_HTML, print_output=False):
+def runner(args, output=TEST_HTML, print_output=False, image=TEST_IMAGE):
     runner = CliRunner()
-    result = runner.invoke(main, [TEST_IMAGE] + args)
+    result = runner.invoke(main, [image] + args)
     if print_output:
         print(result.output)
     assert result.exit_code == 0
@@ -27,6 +27,7 @@ def test_render():
 def test_palettes():
     for p in palette.PALETTES:
         runner(["-p", p])
+        runner(["-p", p, "-s", "25"], image="test_image.jpg")
 
 
 def test_guidelines():
@@ -51,3 +52,7 @@ def test_term():
 
 def test_term_render():
     runner(["-o", "term", "-r"], output="ih version", print_output=True)
+    runner(["-o", "term", "-r", "-s", "25"],
+           output="ih version",
+           print_output=True,
+           image="test_image.jpg")
