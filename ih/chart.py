@@ -53,16 +53,16 @@ def preprocess_image(
     scale=DEFAULT["scale"],
     guidelines=DEFAULT["guidelines"],
 ):
+    # Reduce palette to max 256 colors
+    reduced_palette = palette.reduce_palette(palette=pal, image=im)
+    palette_image = palette.get_palette_image(reduced_palette)
+    im = im.resize((int(im.width / scale), int(im.height / scale)))
+
     # Remove black transparency issues with this one weird trick.
     alpha = im.convert("RGBA").split()[-1]
     bg = Image.new("RGBA", im.size, (255, 255, 255, 255))
     bg.paste(im, mask=alpha)
     im = bg
-
-    # Reduce palette
-    reduced_palette = palette.reduce_palette(palette=pal, image=im)  # cap palette size at 256
-    palette_image = palette.get_palette_image(reduced_palette)
-    im = im.resize((int(im.width / scale), int(im.height / scale)))
 
     im = (
         im.convert("RGB")
