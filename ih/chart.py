@@ -249,7 +249,11 @@ def generate_html_chart(
 def save_chart(html, image, fileformat, outputfolder):
     if fileformat == "html":
         os.makedirs(outputfolder, exist_ok=True)
-        fn = "_".join(image.name.split("/")[-1].split(".")[:-1])
+        if type(image) == str: 
+            imna = image
+        else:
+            imna = image.name
+        fn = "_".join(imna.split("/")[-1].split(".")[:-1])
         outfile = os.path.join(outputfolder, f"{fn}.{fileformat}")
 
         with open(outfile, "w", encoding="utf-8") as f:
