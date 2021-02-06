@@ -4,7 +4,7 @@ from ih import chart, palette
 
 
 @click.command()
-@click.argument("image")
+@click.argument("image", type=click.File('rb'))
 @click.option(
     "--palette",
     "-p",
@@ -51,16 +51,20 @@ from ih import chart, palette
     show_default=True,
     help="Output file format",
 )
+@click.option('--outputfolder', '-f',
+    default=chart.DEFAULT["outputfolder"],
+)
 @click.version_option()
-def main(image, palette, scale, colors, render, guidelines, fileformat):
+def main(image, palette, scale, colors, render, guidelines, fileformat, outputfolder):
     result = chart.chart(
-        image_name=image,
+        image=image,
         palette_name=palette,
         scale=scale,
         colors=colors,
         render=render,
         guidelines=guidelines,
         fileformat=fileformat,
+        outputfolder=outputfolder
     )
 
     if fileformat == "html":

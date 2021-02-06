@@ -2,6 +2,7 @@ import json
 import click
 from textwrap import dedent
 
+import os
 from tabulate import tabulate
 from PIL import Image, ImageOps
 
@@ -16,7 +17,7 @@ DEFAULT = {
     "render": False,
     "guidelines": False,
     "fileformat": "html",
-    "output_format": "html",
+    "outputfolder": '.',
 }
 
 OUTPUT_FORMAT = ["html", "term"]
@@ -245,9 +246,11 @@ def generate_html_chart(
     return "\n".join(html)
 
 
-def save_chart(html, image, fileformat):
+def save_chart(html, image, fileformat, outputfolder):
     if fileformat == "html":
-        outfile = "{}.html".format("_".join(image.split("/")[-1].split(".")[:-1]))
+        os.makedirs(outputfolder, exist_ok=True)
+        fn = "_".join(image.name.split("/")[-1].split(".")[:-1])
+        outfile = os.path.join(outputfolder, f"{fn}.{fileformat}")
 
         with open(outfile, "w", encoding="utf-8") as f:
             f.write(html)
@@ -312,7 +315,7 @@ def generate_term_chart(chartimage, pal, render, palette_name, data):
 
 
 def chart(
-    image_name=None,
+    image=None,
     image_obj=None,
     palette_name=DEFAULT["palette"],  # PALETTE_DEFAULT,
     scale=DEFAULT["scale"],
@@ -320,10 +323,13 @@ def chart(
     render=DEFAULT["render"],
     guidelines=DEFAULT["guidelines"],
     fileformat=DEFAULT["fileformat"],
+    outputfolder=DEFAULT["outputfolder"],
 ):
     # can't have both guidelines and rendering
     if render:
         guidelines = False
+
+    image_name = image
 
     if image_name:
         im = Image.open(image_name)
@@ -355,7 +361,7 @@ def chart(
             guidelines=guidelines,
             data=data,
         )
-        saved = save_chart(chart, image_name, fileformat)
+        saved = save_chart(chart, image_name, fileformat, outputfolder)
         return saved
     elif fileformat == "term":
         chart = generate_term_chart(
