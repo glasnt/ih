@@ -1,0 +1,13 @@
+Earth Blue,#1C2D52
+Medium Stone Grey,#808080
+Black,#232323
+White,#CDCBCF
+Bright Yellow,#EFB827
+Reddish Brown,#411F10
+Vibrant Coral,#E3588C
+Bright Orange,#CD6823
+Dark Green,#439442
+Dark Stone Grey,#515151
+Bright Blue,#1C4BA2
+Bright Red,#AC1E1E
+Brick Yellow,#A1915B
