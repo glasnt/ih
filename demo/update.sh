@@ -49,9 +49,10 @@ then
   echo "Update demo render"
   node demo/update_render.js
 
-  git add demo/demo_render.png && git commit -m "update demo render"
+  git add demo/ && git commit -m "update demo render"
 
   git release
+  git push
 else
   echo "user bailed. will not continue"
 fi
