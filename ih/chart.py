@@ -91,7 +91,7 @@ def get_legend(chartimage):
         rgb = x[1]
         h = helpers.rgb2hex(rgb)
         star = STARS[idx % len(STARS)]
-        sclass = helpers.star_class(star)
+        sclass = helpers.col_class(h)
 
         # Choose the best text colour
         if (rgb[0] * 0.299 + rgb[1] * 0.587 + rgb[2] * 0.114) > 186:
@@ -156,7 +156,7 @@ def generate_html_chart(
     if not render:
         html.append(
             '.%s::after { content: "%s" }'
-            % (helpers.star_class(helpers.WHITESTAR), helpers.WHITESTAR)
+            % (helpers.col_class(helpers.WHITECOL), helpers.WHITESTAR)
         )
 
     html.append("</style>")
