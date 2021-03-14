@@ -30,8 +30,6 @@ def test_stars():
     for i in range(0, w):
         for j in range(0, h):
             c = palette[ct] 
-            # Random color
-            # c = (0, int(255/length * i), int(255/(stars/length) * j))
             ct += 1
             draw.polygon([(i,j),(i+s, j), (i, j+s), (i+s, j+s)], fill=c)
 
