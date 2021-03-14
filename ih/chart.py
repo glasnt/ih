@@ -48,7 +48,7 @@ def debug_data(image_name, scale, colors, palette_name, chartimage, colorsused, 
         f"ih version: {ih_version}",
     ]
     if fileformat == "html":
-        return f'<div class="debug">' + "<br>".join(data) + "</div>"
+        return f'<div class="debug">' + "<br />".join(data) + "</div>"
     else:
         return "\n".join(data)
 
@@ -114,7 +114,7 @@ def generate_html_chart(
     data="",
 ):
 
-    html = ['<html><meta charset="UTF-8">']
+    html = ['<html><meta charset="UTF-8" />']
 
     with open(helpers.base_path("styling").joinpath("styling.css")) as s:
         html.append("<style>")
