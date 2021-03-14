@@ -30,17 +30,19 @@ GUIDE = 10
 GUIDECOL = (0, 0, 0, 0)
 
 
+def nicename(image_name): 
+    if hasattr(image_name, "name"):
+        image_name = image_name.name
+    return Path(image_name).name
+
+
+
 def debug_data(image_name, scale, colors, palette_name, chartimage, colorsused, fileformat="html"):
     import pkg_resources
 
-    # format to a nice name
-    if hasattr(image_name, "name"):
-        image_name = image_name.name
-    name = Path(image_name).name
-
     ih_version = pkg_resources.require("ih")[0].version
     data = [
-        f"Image: {name}",
+        f"Image: {nicename(image_name)}",
         f"Scale: {scale}x",
         f"Image size: {chartimage.height} x {chartimage.width}",
         f"Palette: {palette_name}",
@@ -106,6 +108,7 @@ def get_legend(chartimage):
 
 
 def generate_html_chart(
+    image_name,
     chartimage,
     palette_name,
     pal,
@@ -114,7 +117,8 @@ def generate_html_chart(
     data="",
 ):
 
-    html = ['<html><meta charset="UTF-8" />']
+    html = [f'<html><meta charset="UTF-8" /><title>ih - {nicename(image_name)}</title>']
+    html.append('<link rel="icon" href="data:image/svg+xml,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3e%3ctext y=%22.9em%22 font-size=%2290%22%3e%f0%9f%a7%b6%3c/text%3e%3c/svg%3e" />')
 
     with open(helpers.base_path("styling").joinpath("styling.css")) as s:
         html.append("<style>")
@@ -365,7 +369,8 @@ def chart(
 
     if fileformat == "html":
         chart = generate_html_chart(
-            chartimage,
+            image_name=image_name,
+            chartimage=chartimage,
             palette_name=palette_name,
             pal=pal,
             render=render,
