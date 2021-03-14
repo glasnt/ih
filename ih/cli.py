@@ -53,6 +53,7 @@ from ih import chart, palette
 )
 @click.option('--outputfolder', '-f',
     default=chart.DEFAULT["outputfolder"],
+    help="Output folder"
 )
 @click.version_option()
 def main(image, palette, scale, colors, render, guidelines, fileformat, outputfolder):
