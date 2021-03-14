@@ -30,7 +30,7 @@ GUIDE = 10
 GUIDECOL = (0, 0, 0, 0)
 
 
-def debug_data(image_name, scale, colors, palette_name, chartimage, fileformat="html"):
+def debug_data(image_name, scale, colors, palette_name, chartimage, colorsused, fileformat="html"):
     import pkg_resources
 
     # format to a nice name
@@ -44,7 +44,7 @@ def debug_data(image_name, scale, colors, palette_name, chartimage, fileformat="
         f"Scale: {scale}x",
         f"Image size: {chartimage.height} x {chartimage.width}",
         f"Palette: {palette_name}",
-        f"Colors: {colors}",
+        f"Colors used: {colorsused} (of possible {colors})",
         f"ih version: {ih_version}",
     ]
     if fileformat == "html":
@@ -360,6 +360,7 @@ def chart(
         palette_name=palette_name,
         chartimage=chartimage,
         fileformat=fileformat,
+        colorsused=len(sorted(chartimage.getcolors())),
     )
 
     if fileformat == "html":
