@@ -14,7 +14,7 @@ then
 
   python demo/update_readme.py
 
-  g vb $update
+  git version-bump $update
 
   ih -p alpaca -r -c 4 demo/demo_image.png -f demo/
 
