@@ -155,7 +155,7 @@ def generate_html_chart(
 
         html.append(".%s { background-color: %s; color: %s }" % (x, y["bg"], y["c"]))
         if not render:
-            html.append('.%s::after { content: "%s" }' % (x, y["star"]))
+            html.append('.%s::after { content: "%s\ufe0e" }' % (x, y["star"]))
 
     if not render:
         html.append(
