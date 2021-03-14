@@ -1,13 +1,25 @@
 from click.testing import CliRunner
+from pathlib import Path
+
 from ih.cli import main
 from ih import palette
 
 
-TEST_IMAGE = "test_image.png"
-TEST_HTML = TEST_IMAGE.split(".")[0] + ".html"
+
+TEST_PNG = "test/images/smile.png"
+TEST_JPG = "test/images/aurora.jpg"
+TEST_OUTPUT = "test/output"
+
+Path(TEST_OUTPUT).mkdir(exist_ok=True)
+
+def get_test_html(image_src):
+    return Path(image_src).stem + ".html"
 
 
-def runner(args, output=TEST_HTML, print_output=False, image=TEST_IMAGE):
+def runner(args, print_output=False, image=TEST_PNG, output=None):
+    if not output:
+        output = get_test_html(image)
+    args += ["-f", TEST_OUTPUT]
     runner = CliRunner()
     result = runner.invoke(main, [image] + args)
     if print_output:
@@ -27,7 +39,7 @@ def test_render():
 def test_palettes():
     for p in palette.PALETTES:
         runner(["-p", p])
-        runner(["-p", p, "-s", "25"], image="test_image.jpg")
+        runner(["-p", p, "-s", "25"], image=TEST_JPG)
 
 
 def test_guidelines():
@@ -55,4 +67,4 @@ def test_term_render():
     runner(["-o", "term", "-r", "-s", "25"],
            output="ih version",
            print_output=True,
-           image="test_image.jpg")
+           image=TEST_JPG)
