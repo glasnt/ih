@@ -1,6 +1,7 @@
 import json
 import click
 from textwrap import dedent
+from pathlib import Path
 
 import os
 from tabulate import tabulate
@@ -29,20 +30,27 @@ GUIDE = 10
 GUIDECOL = (0, 0, 0, 0)
 
 
-def debug_data(image_name, scale, colors, palette_name, chartimage, fileformat="html"):
+def nicename(image_name): 
+    if hasattr(image_name, "name"):
+        image_name = image_name.name
+    return Path(image_name).name
+
+
+
+def debug_data(image_name, scale, colors, palette_name, chartimage, colorsused, fileformat="html"):
     import pkg_resources
 
     ih_version = pkg_resources.require("ih")[0].version
     data = [
-        f"Image: {image_name}",
+        f"Image: {nicename(image_name)}",
         f"Scale: {scale}x",
         f"Image size: {chartimage.height} x {chartimage.width}",
         f"Palette: {palette_name}",
-        f"Colors: {colors}",
+        f"Colors used: {colorsused} (of possible {colors})",
         f"ih version: {ih_version}",
     ]
     if fileformat == "html":
-        return f'<div class="debug">' + "<br>".join(data) + "</div>"
+        return f'<div class="debug">' + "<br />".join(data) + "</div>"
     else:
         return "\n".join(data)
 
@@ -85,7 +93,7 @@ def get_legend(chartimage):
         rgb = x[1]
         h = helpers.rgb2hex(rgb)
         star = STARS[idx % len(STARS)]
-        sclass = helpers.star_class(star)
+        sclass = helpers.col_class(h)
 
         # Choose the best text colour
         if (rgb[0] * 0.299 + rgb[1] * 0.587 + rgb[2] * 0.114) > 186:
@@ -100,6 +108,7 @@ def get_legend(chartimage):
 
 
 def generate_html_chart(
+    image_name,
     chartimage,
     palette_name,
     pal,
@@ -108,7 +117,8 @@ def generate_html_chart(
     data="",
 ):
 
-    html = ['<html><meta charset="UTF-8">']
+    html = [f'<html><meta charset="UTF-8" /><title>ih - {nicename(image_name)}</title>']
+    html.append('<link rel="icon" href="data:image/svg+xml,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3e%3ctext y=%22.9em%22 font-size=%2290%22%3e%f0%9f%a7%b6%3c/text%3e%3c/svg%3e" />')
 
     with open(helpers.base_path("styling").joinpath("styling.css")) as s:
         html.append("<style>")
@@ -145,12 +155,12 @@ def generate_html_chart(
 
         html.append(".%s { background-color: %s; color: %s }" % (x, y["bg"], y["c"]))
         if not render:
-            html.append('.%s::after { content: "%s" }' % (x, y["star"]))
+            html.append('.%s::after { content: "%s\ufe0e" }' % (x, y["star"]))
 
     if not render:
         html.append(
             '.%s::after { content: "%s" }'
-            % (helpers.star_class(helpers.WHITESTAR), helpers.WHITESTAR)
+            % (helpers.col_class(helpers.WHITECOL), helpers.WHITESTAR)
         )
 
     html.append("</style>")
@@ -354,11 +364,13 @@ def chart(
         palette_name=palette_name,
         chartimage=chartimage,
         fileformat=fileformat,
+        colorsused=len(sorted(chartimage.getcolors())),
     )
 
     if fileformat == "html":
         chart = generate_html_chart(
-            chartimage,
+            image_name=image_name,
+            chartimage=chartimage,
             palette_name=palette_name,
             pal=pal,
             render=render,

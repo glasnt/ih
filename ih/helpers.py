@@ -12,8 +12,6 @@ STARS = [
     "◀",
     "♠",
     "✿",
-    "⟘",
-    "⟒",
     "⚉",
     "♣",
     "▷",
@@ -27,15 +25,22 @@ STARS = [
     "❤",
     "⟙",
     "✾",
-    "∀",
     "⊕",
     "♥",
     "⇨",
     "⚇",
     "◼",
+    "⁋",
+    "⬣",
+    "^",
+    "&",
+    "=",
+    "|",
+    "#",
 ]
 
 WHITESTAR = "·"
+WHITECOL = "#ffffff"
 
 
 def rgb2hex(pix):
@@ -66,10 +71,10 @@ def color_cell(
     else:
         td = "span"
 
-    if color == "#ffffff":
+    if color == WHITECOL: 
         star = WHITESTAR
 
-    classes = f"s {star_class(star)}"
+    classes = f"s {col_class(color)}"
     if center:
         classes += " center"
     if guide[1]:
@@ -80,8 +85,11 @@ def color_cell(
     return f'<{td} class="{classes}"></{td}>'
 
 
-def star_class(star):
-    return f"u{hex(ord(star))[2:]}"
+#def star_class(star):
+#     return f"u{hex(ord(star))[2:]}"
+
+def col_class(col):
+     return f"u-{col[1:].lower()}"
 
 
 def base_path(path):

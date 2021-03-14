@@ -26,6 +26,7 @@ def runner(args, print_output=False, image=TEST_PNG, output=None):
         print(result.output)
     assert result.exit_code == 0
     assert output in result.output
+    return output
 
 
 def test_image():
