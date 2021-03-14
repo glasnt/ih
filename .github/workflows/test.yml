@@ -34,3 +34,9 @@ jobs:
     - name: Test with pytest
       run: |
         pytest -s
+    - name: Snapshot to Percy
+      uses: percy/snapshot-action@v0.1.0
+      with:
+        build-directory: "test/output"
+      env:
+        PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
