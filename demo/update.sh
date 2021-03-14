@@ -37,6 +37,8 @@ then
   git version-bump $update
 
   echo "use new version"
+
+  pip install -e .
   ih --version
 
   # Hard-copy from README.md example
