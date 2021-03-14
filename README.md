@@ -48,6 +48,7 @@ Options:
   -f, --outputfolder TEXT
   --version                       Show the version and exit.
   --help                          Show this message and exit.
+
 ```
 [//]: <> (END_USAGE)
 
