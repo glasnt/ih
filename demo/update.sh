@@ -14,7 +14,7 @@ then
 
   python demo/update_readme.py
 
-  echo g vb $update
+  g vb $update
 
   ih -p alpaca -r -c 4 demo/demo_image.png -f demo/
 
