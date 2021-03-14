@@ -1,6 +1,7 @@
 import json
 import click
 from textwrap import dedent
+from pathlib import Path
 
 import os
 from tabulate import tabulate
@@ -32,9 +33,14 @@ GUIDECOL = (0, 0, 0, 0)
 def debug_data(image_name, scale, colors, palette_name, chartimage, fileformat="html"):
     import pkg_resources
 
+    # format to a nice name
+    if hasattr(image_name, "name"):
+        image_name = image_name.name
+    name = Path(image_name).name
+
     ih_version = pkg_resources.require("ih")[0].version
     data = [
-        f"Image: {image_name}",
+        f"Image: {name}",
         f"Scale: {scale}x",
         f"Image size: {chartimage.height} x {chartimage.width}",
         f"Palette: {palette_name}",
