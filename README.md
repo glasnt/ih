@@ -45,7 +45,7 @@ Options:
                                   [default: False]
 
   -o, --fileformat [html|term]    Output file format  [default: html]
-  -f, --outputfolder TEXT
+  -f, --outputfolder TEXT         Output folder
   --version                       Show the version and exit.
   --help                          Show this message and exit.
 
