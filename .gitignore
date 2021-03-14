@@ -2,3 +2,6 @@ venv/*
 .egg*
 dist/*
 *.html
+
+test/images/stars_image.png
+test/output/*
