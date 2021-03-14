@@ -16,9 +16,8 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-          - "3.6"
-          - "3.7"
           - "3.8"
+          - "3.9"
 
     steps:
     - uses: actions/checkout@v2
@@ -35,7 +34,7 @@ jobs:
       run: |
         pytest -s
     - name: Snapshot to Percy
-      uses: percy/snapshot-action@v0.1.0
+      uses: percy/snapshot-action@v0.1.2
       with:
         build-directory: "test/output"
       env:
