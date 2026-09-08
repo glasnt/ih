@@ -1,9 +1,11 @@
 """
 Helpers and values
 """
-import os
-import pkg_resources
-from pathlib import Path
+
+try:
+    import importlib.resources as importlib_resources
+except (ModuleNotFoundError, ImportError):
+    import importlib_resources
 
 # A series of visually distinct characters, to populate the chart
 STARS = [
@@ -93,4 +95,4 @@ def col_class(col):
 
 
 def base_path(path):
-    return Path(pkg_resources.resource_filename("ih", path))
+    return importlib_resources.files("ih") / path

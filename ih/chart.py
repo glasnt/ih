@@ -38,9 +38,12 @@ def nicename(image_name):
 
 
 def debug_data(image_name, scale, colors, palette_name, chartimage, colorsused, fileformat="html"):
-    import pkg_resources
+    try:
+        from importlib.metadata import version
+    except (ModuleNotFoundError, ImportError):
+        from importlib_metadata import version
 
-    ih_version = pkg_resources.require("ih")[0].version
+    ih_version = version("ih")
     data = [
         f"Image: {nicename(image_name)}",
         f"Scale: {scale}x",
