@@ -38,10 +38,7 @@ def nicename(image_name):
 
 
 def debug_data(image_name, scale, colors, palette_name, chartimage, colorsused, fileformat="html"):
-    try:
-        from importlib.metadata import version
-    except (ModuleNotFoundError, ImportError):
-        from importlib_metadata import version
+    from importlib.metadata import version
 
     ih_version = version("ih")
     data = [

@@ -2,10 +2,7 @@
 Helpers and values
 """
 
-try:
-    import importlib.resources as importlib_resources
-except (ModuleNotFoundError, ImportError):
-    import importlib_resources
+import importlib.resources
 
 # A series of visually distinct characters, to populate the chart
 STARS = [
@@ -95,4 +92,4 @@ def col_class(col):
 
 
 def base_path(path):
-    return importlib_resources.files("ih") / path
+    return importlib.resources.files("ih") / path
