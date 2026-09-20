@@ -1,6 +1,8 @@
 venv/*
-.egg*
+*.egg*
 dist/*
 
 test/images/stars_image.png
 test/output/*
+
+__pycache__/
