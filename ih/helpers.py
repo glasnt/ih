@@ -1,9 +1,8 @@
 """
 Helpers and values
 """
-import os
-import pkg_resources
-from pathlib import Path
+
+import importlib.resources
 
 # A series of visually distinct characters, to populate the chart
 STARS = [
@@ -93,4 +92,4 @@ def col_class(col):
 
 
 def base_path(path):
-    return Path(pkg_resources.resource_filename("ih", path))
+    return importlib.resources.files("ih") / path
